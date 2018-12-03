@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	
+	<!-- 데이터베이스 접속 설정 -->
+	<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource" 
+		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+		p:url="jdbc:oracle:thin:@localhost:1521:XE" 
+		p:username="heyyo"  
+		p:password="1234"  
+	/> 		 		 
+			 
+	<!-- MyBatis SQL 실행 클래스  --> 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="spring.model" />
+		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
+	</bean>
+	 
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+			 
+	<bean id="restaurantCategoryDAO" class="spring.model.restaurantCategory.RestaurantCategoryDAO" 
+		p:mybatis-ref="sqlSession" />	
+	<bean id="restaurantDAO" class="spring.model.restaurant.RestaurantDAO" 
+		p:mybatis-ref="sqlSession" />
+	<bean id="restaurantDetailDAO" class="spring.model.restaurantDetail.RestaurantDetailDAO" 
+		p:mybatis-ref="sqlSession" />
+	<bean id="foodDAO" class="spring.model.food.FoodDAO"
+		p:mybatis-ref="sqlSession" />
+
+</beans>

@@ -176,8 +176,27 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency> 
+		
+		<!-- Oracle JDBC Driver--> 
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc5 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc5</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
+		       
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+	</repositories>	
+	
+	
     <build>
         <plugins>
             <plugin>

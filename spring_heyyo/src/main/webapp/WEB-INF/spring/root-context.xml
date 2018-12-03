@@ -56,14 +56,13 @@
 	p:password="1234"  
 	/> 	--> 
 		 
-	<bean 
-	id="dataSource" 
-	destroy-method="close"
-	class="org.apache.commons.dbcp.BasicDataSource" 
-	p:driverClassName="oracle.jdbc.driver.OracleDriver" 
-	p:url="jdbc:oracle:thin:@localhost:1521:XE" 
-	p:username="heyyo"  
-	p:password="1234"  
+	<bean id="dataSource" 
+		destroy-method="close"
+		class="org.apache.commons.dbcp.BasicDataSource" 
+		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+		p:url="jdbc:oracle:thin:@localhost:1521:XE" 
+		p:username="heyyo"  
+		p:password="1234"  
 	/> 		 
 			 
 	<!-- MyBatis SQL 실행 클래스  --> 
@@ -78,14 +77,11 @@
 	    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	  </bean>
 			 
-	
-	
-		<!--    파일 전송이 있는 경우만 선언, File upload   --> 
+	<!--    파일 전송이 있는 경우만 선언, File upload   --> 
 	<bean id="multipartResolver" 
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
     </bean>
-     
-     
+    
 	<!-- tiles2 -->	
 	<bean id="tilesconfigurer"  
         class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
