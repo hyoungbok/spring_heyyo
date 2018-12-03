@@ -79,7 +79,7 @@ public class FoodDAO implements IFoodDAO{
 
 	@Override
 	public int total(Map map) throws Exception {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
