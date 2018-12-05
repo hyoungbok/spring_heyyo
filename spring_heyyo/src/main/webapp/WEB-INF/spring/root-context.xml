@@ -6,18 +6,18 @@
     xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+	    http://www.springframework.org/schema/aop/spring-aop.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx.xsd
+	    http://www.springframework.org/schema/context 
+	    http://www.springframework.org/schema/context/spring-context.xsd
 	">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	   <!-- Transaction Manager -->
+	<!-- Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
@@ -43,21 +43,17 @@
 	
 	
 	
-		<!-- 데이터베이스 접속 설정 
-					 
-	<bean 
-	id="dataSource" 
-	destroy-method="close"
-	class="org.apache.commons.dbcp.BasicDataSource" 
-	p:driverClassName="oracle.jdbc.driver.OracleDriver" 
-	p:url="jdbc:oracle:thin:@172.16.3.157:1521:XE" 
-	
-	p:username="heyyo"  
-	p:password="1234"  
+	<!-- 데이터베이스 접속 설정 --> 
+	<!-- 			 
+	<bean id="dataSource" destroy-method="close" 
+		class="org.apache.commons.dbcp.BasicDataSource" 
+		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+		p:url="jdbc:oracle:thin:@172.16.3.157:1521:XE" 
+		p:username="heyyo"  
+		p:password="1234"  
 	/> 	--> 
 		 
-	<bean id="dataSource" 
-		destroy-method="close"
+	<bean id="dataSource" destroy-method="close" 
 		class="org.apache.commons.dbcp.BasicDataSource" 
 		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
 		p:url="jdbc:oracle:thin:@localhost:1521:XE" 
@@ -67,15 +63,15 @@
 			 
 	<!-- MyBatis SQL 실행 클래스  --> 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource" />
-	    <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
-	    <property name="typeAliasesPackage" value="spring.model" />
-	    <property name="mapperLocations" value="classpath:mybatis/*.xml" />
-	  </bean>
-	 
-	  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-	    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
-	  </bean>
+		<property name="dataSource" ref="dataSource" />
+		<!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
+		<property name="typeAliasesPackage" value="spring.model" />
+		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 			 
 	<!--    파일 전송이 있는 경우만 선언, File upload   --> 
 	<bean id="multipartResolver" 
@@ -86,9 +82,9 @@
 	<bean id="tilesconfigurer"  
         class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
         <property name="definitions"> 
-            <list> 
-               
+            <list>        
                 <value>/WEB-INF/spring/review.xml</value> 
+                
        <!--          <value>/WEB-INF/spring/review_reply.xml</value> 
                 <value>/WEB-INF/spring/report.xml</value> 
                 <value>/WEB-INF/spring/ask.xml</value> 
@@ -102,6 +98,8 @@
         <property name="viewClass"> 
             <value>org.springframework.web.servlet.view.tiles2.TilesView</value> 
         </property> 
-        <property name="order"><value>1</value></property>
+        <property name="order">
+        	<value>1</value>
+        </property>
     </bean> 	
 </beans>

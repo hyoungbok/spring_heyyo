@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT r_code, r_name, r_logo, r_min, r_pay, r_mintime, r_maxtime
 		FROM restaurant
 		WHERE r_bcode = #{r_bcode} 
-		<if test="r_categorycode != 'C00'">
+		<if test="r_categorycode != null">
 			AND r_categorycode = #{r_categorycode}
 		</if>
 	</select>
