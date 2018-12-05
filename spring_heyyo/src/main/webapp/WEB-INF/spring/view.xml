@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE  tiles-definitions PUBLIC 
+    "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+
+<tiles-definitions> 
+   <definition name="main" template="/WEB-INF/views/template/template.jsp"> 
+        <put-attribute name="header" value="/WEB-INF/views/template/header.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+	<definition name="/home" extends="main"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+    </definition>   
+	
+	<definition name="main2" template="/WEB-INF/views/template/template.jsp"> 
+        <put-attribute name="header" value="/WEB-INF/views/template/top.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+	<definition name="/shop/03" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/shop/03.jsp" /> 
+    </definition>   
+	<definition name="/shop/01" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/shop/01.jsp" /> 
+    </definition>   
+	<definition name="/shop/02" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/shop/02.jsp" /> 
+    </definition>   
+	
+	<definition name="/boss/001" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/boss/001.jsp" /> 
+    </definition>   
+	
+	<definition name="/myshop/000" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myshop/000.jsp" /> 
+    </definition>   
+	<definition name="/myshop/001" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myshop/001.jsp" /> 
+    </definition>   
+	<definition name="/myshop/002" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myshop/002.jsp" /> 
+    </definition>   
+	<definition name="/myshop/003" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myshop/003.jsp" /> 
+    </definition>   
+	<definition name="/myshop/004" extends="main2"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myshop/004.jsp" /> 
+    </definition>   
+
+           
+   
+</tiles-definitions> 
