@@ -34,9 +34,14 @@ public class FoodDAO implements IFoodDAO{
 
 	@Override
 	public List list(Map map) throws Exception {
+		
+		return null;
+	}
+	
+	public List list(String r_code) throws Exception {
 		List<FoodDTO> list = null;
 		
-		list = mybatis.selectList("food.list", map);
+		list = mybatis.selectList("food.list", r_code);
 		
 		return list;
 	}
@@ -44,9 +49,9 @@ public class FoodDAO implements IFoodDAO{
 	@Override
 	public Object read(Object pk) throws Exception {
 		FoodDTO foodDTO = null;
-		String r_code = (String) pk;
+		String food_code = (String) pk;
 		
-		foodDTO = mybatis.selectOne("food.read", r_code);
+		foodDTO = mybatis.selectOne("food.read", food_code);
 		
 		return foodDTO;
 	}
@@ -56,7 +61,7 @@ public class FoodDAO implements IFoodDAO{
 		boolean flag = false;
 		FoodDTO foodDTO = (FoodDTO) dto;
 		
-		int result = mybatis.update("food.create", foodDTO);
+		int result = mybatis.update("food.update", foodDTO);
 		if(result > 0) {
 			flag = true;
 		}
@@ -67,15 +72,28 @@ public class FoodDAO implements IFoodDAO{
 	@Override
 	public boolean delete(Object pk) throws Exception {
 		boolean flag = false;
-		String r_code = (String) pk;
+		String food_code = (String) pk;
 		
-		int result = mybatis.delete("food.create", r_code);
+		int result = mybatis.delete("food.delete", food_code);
 		if(result > 0) {
 			flag = true;
 		}
 		
 		return flag;
 	}
+	
+	public boolean deleteAll(Object pk) throws Exception {
+		boolean flag = false;
+		String r_code = (String) pk;
+		
+		int result = mybatis.delete("food.deleteAll", r_code);
+		if(result > 0) {
+			flag = true;
+		}
+		
+		return flag;
+	}
+	
 
 	@Override
 	public int total(Map map) throws Exception {

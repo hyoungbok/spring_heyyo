@@ -7,6 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author soldesk
+ *
+ */
 @Repository
 public class RestaurantDetailDAO implements IRestaurantDetailDAO{
 
@@ -62,9 +66,21 @@ public class RestaurantDetailDAO implements IRestaurantDetailDAO{
 	@Override
 	public boolean delete(Object pk) throws Exception {
 		boolean flag = false;
+		String r_detailcode = (String) pk;
+		
+		int result = mybatis.delete("restaurantDetail.delete", r_detailcode);
+		if(result > 0) {
+			flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean deleteAll(Object pk) throws Exception {
+		boolean flag = false;
 		String r_code = (String) pk;
 		
-		int result = mybatis.delete("restaurantDetail.create", r_code);
+		int result = mybatis.delete("restaurantDetail.deleteAll", r_code);
 		if(result > 0) {
 			flag = true;
 		}

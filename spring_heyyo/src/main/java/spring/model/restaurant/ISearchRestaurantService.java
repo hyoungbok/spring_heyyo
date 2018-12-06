@@ -1,9 +1,10 @@
 package spring.model.restaurant;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ISearchRestaurantService {
 
 	public List<RestaurantDTO> getRestaurantList(String BubjungdongCode, String categoryCode);
-	public RestaurantDTO readOneRestaurant(String restaurantCode);
+	public Map<String, Object> readOneRestaurant(String restaurantCode);
 }

@@ -1,6 +1,7 @@
 package spring.sts.heyyo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import spring.model.food.FoodDTO;
 import spring.model.restaurant.RestaurantDTO;
 import spring.model.restaurant.SearchRestaurantService;
 
@@ -45,8 +47,16 @@ public class SearchRestaurantController {
 	public String readOne(@PathVariable(name = "restaurantCode") String restaurantCode, Model model) {
 		
 		RestaurantDTO restaurantDTO = null;
+		List<FoodDTO> foodList = null;
+		Map restaurantInfoMap = null;
 		
-		searchRestaurantService.readOneRestaurant(restaurantCode);
+		restaurantInfoMap = searchRestaurantService.readOneRestaurant(restaurantCode);
+		
+		restaurantDTO = (RestaurantDTO) restaurantInfoMap.get("restaurantDTO");
+		foodList = (List<FoodDTO>) restaurantInfoMap.get("foodList");
+		
+		model.addAttribute("restaurant",restaurantDTO);
+		model.addAttribute("foodList", foodList);
 		
 		return "search/restaurant_view";
 	}

@@ -3,6 +3,7 @@ package spring.model.restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import spring.model.food.FoodDAO;
 import spring.model.restaurantDetail.RestaurantDetailDAO;
 
 /**
@@ -18,18 +19,41 @@ public class RegisterRestaurantService implements IRegisterRestaurantService {
 	@Autowired
 	private RestaurantDetailDAO restaurantDetailDAO;
 	
+	@Autowired
+	private FoodDAO foodDAO;
+	
 	@Override
-	public void registRestaurant(RestaurantDTO restaurantDTO) {
+	public void regist(RestaurantDTO restaurantDTO) {
 		
+		try {
+			restaurantDAO.create(restaurantDTO);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void modifiedRestaurant(RestaurantDTO restaurantDTO) {
+	public void modified(RestaurantDTO restaurantDTO) {
 		
+		try {
+			restaurantDAO.update(restaurantDTO);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void unregistRestaurant(String restaurantCode) {
+	public void unregist(String restaurantCode) {
 		
+		try {
+			foodDAO.deleteAll(restaurantCode);
+			restaurantDetailDAO.deleteAll(restaurantCode);
+			restaurantDAO.delete(restaurantCode);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 }

@@ -25,6 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM food WHERE food_code = #{food_code}
 	</delete>
 	
+	<delete id="deleteAll" parameterType="String">
+		DELETE FROM food WHERE food_code = #{food_code}
+	</delete>
+	
 	<select id="list" parameterType="String" resultType="FoodDTO">
 		SELECT food_code, f_price, f_name, f_image, f_menucode, f_content
 		FROM food

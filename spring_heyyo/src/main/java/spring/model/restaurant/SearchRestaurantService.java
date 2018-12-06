@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import spring.model.food.FoodDAO;
+import spring.model.food.FoodDTO;
 import spring.model.restaurantDetail.RestaurantDetailDAO;
 
 /**
@@ -21,6 +23,9 @@ public class SearchRestaurantService implements ISearchRestaurantService {
 	
 	@Autowired
 	private RestaurantDetailDAO restaurantDetailDAO;
+	
+	@Autowired
+	private FoodDAO foodDAO;
 	
 	@Override
 	public List<RestaurantDTO> getRestaurantList(String BubjungdongCode, String categoryCode) {
@@ -40,16 +45,23 @@ public class SearchRestaurantService implements ISearchRestaurantService {
 	}
 	
 	@Override
-	public RestaurantDTO readOneRestaurant(String restaurantCode) {
+	public Map<String, Object> readOneRestaurant(String restaurantCode) {
 		
 		RestaurantDTO restaurantDTO = null;
+		List<FoodDTO> foodList = null;
+		Map<String, Object> restaurantInfoMap = new HashMap<String, Object>();
 		
 		try {
 			restaurantDTO = (RestaurantDTO) restaurantDAO.read(restaurantCode);
+			foodList = foodDAO.list(restaurantCode);
+			
+			restaurantInfoMap.put("restaurantDTO", restaurantDTO);
+			restaurantInfoMap.put("foodList", foodList);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return restaurantDTO;
+		return restaurantInfoMap;
 	}
 }
