@@ -5,36 +5,36 @@
 
 <tiles-definitions> 
     <definition name="main" template="/WEB-INF/views/template/template.jsp"> 
-        <put-attribute name="header" value="/WEB-INF/views/template/header.jsp" /> 
-        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+        <put-attribute name="header" value="/WEB-INF/views/template/indexTop.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/indexBottom.jsp" /> 
     </definition> 
 	<definition name="/home" extends="main"> 
         <put-attribute name="title" value="기본페이지" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/index.jsp" /> 
     </definition>   
-    <definition name="/bbs/create" extends="main"> 
-        <put-attribute name="title" value="bbs 생성" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/createForm.jsp" /> 
+    <definition name="/review/create" extends="main"> 
+        <put-attribute name="title" value="review 생성" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/create.jsp" /> 
     </definition>   
-    <definition name="/bbs/update" extends="main"> 
-        <put-attribute name="title" value="bbs 수정" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/updateForm.jsp" /> 
+    <definition name="/review/update" extends="main"> 
+        <put-attribute name="title" value="review 수정" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/update.jsp" /> 
     </definition>  
-    <definition name="/bbs/delete" extends="main"> 
-        <put-attribute name="title" value="bbs 삭제" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/deleteForm.jsp" /> 
+    <definition name="/review/delete" extends="main"> 
+        <put-attribute name="title" value="review 삭제" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/delete.jsp" /> 
     </definition>  
-    <definition name="/bbs/reply" extends="main"> 
-        <put-attribute name="title" value="bbs 답변" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/replyForm.jsp" /> 
+    <definition name="/review/reply" extends="main"> 
+        <put-attribute name="title" value="review 답변" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/reply.jsp" /> 
     </definition>    
-    <definition name="/bbs/read" extends="main"> 
-        <put-attribute name="title" value="bbs 조회" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/read.jsp" /> 
+    <definition name="/review/read" extends="main"> 
+        <put-attribute name="title" value="review 조회" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/read.jsp" /> 
     </definition>  
-    <definition name="/bbs/list" extends="main"> 
-        <put-attribute name="title" value="bbs 목록" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bbs/list.jsp" /> 
+    <definition name="/review/list" extends="main"> 
+        <put-attribute name="title" value="review 목록" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/list.jsp" /> 
     </definition>  
    
            

@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ include file="/ssi/ssi.jsp" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +47,7 @@ padding: 10px;
  	<tr>
  	
 	 	<td>
-	 	리뷰 ${totalRecord}개 사장님 댓글 ${replyTotal}개
+	 	리뷰 n개 사장님 댓글 m개
 	 	</td>
  	
  	</tr>
@@ -58,17 +55,17 @@ padding: 10px;
  	
 	 		 <table>
 	 		 	<tr>
-	 		 		<td width="95%">${m_id } 님 ${review_date }</td>
+	 		 		<td width="95%">홍길동 님 2018년 11월 6일</td>
 	 		 		<td>신고</td>
 	 		 	</tr>
 	 		 	<tr>
 	 		 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
 	 		 	</tr>
 	 		 	<tr>
-	 		 		<td colspan="2">${f_name}/${o_amount }(메뉴선택(콜라 500mL),사이즈 선택(中)))</td>
+	 		 		<td colspan="2">찜닭/1(메뉴선택(콜라 500mL),사이즈 선택(中)))</td>
 	 		 	</tr>
 	 		 	<tr>
-	 		 		<td colspan="2">${review_content }</td>
+	 		 		<td colspan="2">정말 잘먹었습니다. 완전 배부르게~~~ ㅎㅎ</td>
 	 		 	</tr>
 	 	  	</table>
 	 	  
@@ -98,7 +95,7 @@ padding: 10px;
 	 		 	</tr>
 	 		 	<tr>
 	 		 		<td colspan="2">
-	 		 		<img src="${root }/review/storage/${review_image }">
+	 		 		<img src="./storage/review1.jpg">
 	 		 		</td>
 	 		 	</tr>
 	 		 	<tr>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+    <insert id="create" parameterType="ReviewDTO">
+	    insert into review(reviewnum,review_point,review_content,
+	    review_image,food_code,review_date,
+	    order_num,m_id,r_code)
+		values((select (nvl(max(reviewnum),0)+1) from review),
+		#{review_point},#{review_content},#{review_image,jdbcType=VARCHAR},
+		#{food_code},sysdate,#{order_num},#{m_id},#{r_code})
+	</insert>
+	
+  	<select id="read" parameterType="int" resultType="ReviewDTO">
+  	select * from review where reviewnum=#{reviewnum}
+  	</select>
+  	
+  	<update id="update" parameterType="ReviewDTO">
+  	update review 
+	set 
+	review_point = #{review_point},
+    review_content=#{review_content},
+    review_image=#{review_image,jdbcType=VARCHAR}
+	where 
+	reviewnum = #{reviewnum}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  	delete review where reviewnum=#{reviewnum}
+  	</delete>
+  	
+  	<select id="list" parameterType="Map" resultType="ReviewDTO">
+  		select 
+		reviewnum,review_point,
+		review_content,review_image,
+		food_code,review_date,order_num,m_id,r_code,r
+		from(
+		    select reviewnum,review_point,
+			review_content,review_image,
+			food_code,review_date,order_num,m_id,r_code,rownum r
+			from 
+			review
+			<where>
+				<choose>
+					<when test="col=='food_code'">
+						food_code like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_image'">
+						review_image like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_point'">
+						review_point like '%'||#{word}||'%'
+					</when>
+				</choose>
+			
+			</where>
+			
+			order by reviewnum desc
+			)
+			<![CDATA[
+			
+		where r>=#{sno} and r<=#{eno}
+			]]>
+			
+  	</select>
+  	
+  	<select id="total"	parameterType="Map" resultType="int">
+  		select count(*) from review
+  		<where>
+  			<choose>
+					<when test="col=='food_code'">
+						food_code like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_image'">
+						review_image like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_point'">
+						review_point like '%'||#{word}||'%'
+					</when>
+				</choose>
+  		</where>
+  	</select>
+</mapper>
+

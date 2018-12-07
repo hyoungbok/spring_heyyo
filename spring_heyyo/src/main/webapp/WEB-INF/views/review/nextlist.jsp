@@ -12,7 +12,7 @@ table {
     width: 100%;
     margin : 10px;
 }
-
+ 
 table, th, td {
     border: 1px solid black;
 }

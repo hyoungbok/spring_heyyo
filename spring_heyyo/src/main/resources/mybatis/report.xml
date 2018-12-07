@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report"> 
+    <insert id="create" parameterType="ReportDTO">
+		insert into report(reportnum,report_content,reviewnum,m_id)
+		values((select (nvl(max(reportnum),0)+1) from report),
+				#{report_content},#{reviewnum},#{m_id})
+	</insert>
+	
+  	<select id="read" parameterType="int" resultType="ReportDTO">
+  		select * from report where reportnum=#{reportnum}
+  	</select>
+  	
+  	<update id="update" parameterType="ReportDTO">
+	  	update report 
+		set report_content = #{report_content}
+		where reportnum = #{reportnum}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  		delete report where reportnum = #{reportnum}
+  	</delete>
+  	
+  	<select id="list" parameterType="Map" resultType="ReportDTO">
+  		select reportnum,report_content,reviewnum,m_id,r
+		from
+		(
+		    select reportnum,report_content,reviewnum,m_id,rownum r
+		    from report
+		    order by reportnum desc
+		)
+			<![CDATA[
+			
+		where r>=#{sno} and r<=#{eno}
+			]]>
+			
+		
+			
+  	</select>
+  	<select id="total"	resultType="int">
+  		select count(*) from report
+  	</select>
+
+</mapper>
+

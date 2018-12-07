@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review_reply">
+    <insert id="create" parameterType="ReviewReplyDTO">
+		insert into review_reply(r_replynum,r_replycontent,reviewnum)
+		values((select (nvl(max(r_replynum),0)+1) from review_reply),#{r_replycontent},#{reviewnum})
+	</insert>
+	
+  	<select id="read" parameterType="int" resultType="ReviewReplyDTO">
+  		select * from review_reply where r_replynum=#{r_replynum}
+  	</select>
+  	
+  	<update id="update" parameterType="ReviewReplyDTO">
+	  	update review_reply 
+		set r_replycontent = #{r_replycontent}
+		where r_replynum = #{r_replynum}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  		delete review_reply where r_replynum = #{r_replynum}
+  	</delete>
+  	
+  	<select id="list" parameterType="Map" resultType="ReviewReplyDTO">
+  		select 
+		r_replynum,r_replycontent,reviewnum,r
+		from(
+				select r_replynum,r_replycontent,reviewnum,rownum r
+				from review_reply
+				order by r_replynum desc
+			)
+		
+			
+  	</select>
+  	<select id="total"	parameterType="Map" resultType="int">
+  		select count(*) from review_reply
+  		<where>
+  			<choose>
+					<when test="col=='food_code'">
+						food_code like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_image'">
+						review_image like '%'||#{word}||'%'
+					</when>
+					<when test="col=='review_point'">
+						review_point like '%'||#{word}||'%'
+					</when>
+				</choose>
+  		</where>
+  	</select>
+
+</mapper>
+
