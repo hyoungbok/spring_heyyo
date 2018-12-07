@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Restaurant View Page</h1>
+<h1>Modified Page</h1>
 </body>
 </html>

@@ -33,26 +33,12 @@
         <aop:pointcut id="transactionPointcut" expression="execution(* spring.model.*.*Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
     </aop:config>
-	
-	
+
    <context:component-scan base-package="spring.model.*" use-default-filters="false"> 
       <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
       <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
    </context:component-scan> 
-	
-	
-	
-	
-	<!-- 데이터베이스 접속 설정 --> 
-	<!-- 			 
-	<bean id="dataSource" destroy-method="close" 
-		class="org.apache.commons.dbcp.BasicDataSource" 
-		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
-		p:url="jdbc:oracle:thin:@172.16.3.157:1521:XE" 
-		p:username="heyyo"  
-		p:password="1234"  
-	/> 	--> 
-		 
+ 
 	<bean id="dataSource" destroy-method="close" 
 		class="org.apache.commons.dbcp.BasicDataSource" 
 		p:driverClassName="oracle.jdbc.driver.OracleDriver" 
@@ -83,13 +69,8 @@
         class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
         <property name="definitions"> 
             <list>        
-                <value>/WEB-INF/spring/review.xml</value> 
-                
-       <!--          <value>/WEB-INF/spring/review_reply.xml</value> 
-                <value>/WEB-INF/spring/report.xml</value> 
-                <value>/WEB-INF/spring/ask.xml</value> 
-                <value>/WEB-INF/spring/buisness_required.xml</value> 
-                 -->
+                <value>/WEB-INF/spring/tiles2_restaurant.xml</value>
+                <value>/WEB-INF/spring/tiles2_search.xml</value>
             </list> 
         </property> 
     </bean>  

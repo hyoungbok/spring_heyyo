@@ -23,37 +23,46 @@ public class RegisterRestaurantService implements IRegisterRestaurantService {
 	private FoodDAO foodDAO;
 	
 	@Override
-	public void regist(RestaurantDTO restaurantDTO) {
+	public boolean regist(RestaurantDTO restaurantDTO) {
+		boolean registResult = false;
 		
 		try {
-			restaurantDAO.create(restaurantDTO);
+			registResult = restaurantDAO.create(restaurantDTO);
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			
 		}
+		
+		return registResult;
 	}
 
 	@Override
-	public void modified(RestaurantDTO restaurantDTO) {
+	public boolean modified(RestaurantDTO restaurantDTO) {
+		boolean registResult = false;
 		
 		try {
-			restaurantDAO.update(restaurantDTO);
+			registResult = restaurantDAO.update(restaurantDTO);
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			
 		}
+		
+		return registResult;
 	}
 
 	@Override
-	public void unregist(String restaurantCode) {
+	public boolean unregist(String restaurantCode) {
+		boolean registResult = false;
 		
 		try {
-			foodDAO.deleteAll(restaurantCode);
-			restaurantDetailDAO.deleteAll(restaurantCode);
-			restaurantDAO.delete(restaurantCode);
+			registResult = foodDAO.deleteAll(restaurantCode);
+			registResult = restaurantDetailDAO.deleteAll(restaurantCode);
+			registResult = restaurantDAO.delete(restaurantCode);
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			
 		}
+		
+		return registResult;
 	}
 }

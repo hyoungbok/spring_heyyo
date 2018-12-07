@@ -2,8 +2,8 @@ package spring.model.restaurant;
 
 public interface IRegisterRestaurantService {
 
-	public void regist(RestaurantDTO restaurantDTO);
-	public void modified(RestaurantDTO restaurantDTO);
-	public void unregist(String restaurantCode);
+	public boolean regist(RestaurantDTO restaurantDTO);
+	public boolean modified(RestaurantDTO restaurantDTO);
+	public boolean unregist(String restaurantCode);
 	
 }

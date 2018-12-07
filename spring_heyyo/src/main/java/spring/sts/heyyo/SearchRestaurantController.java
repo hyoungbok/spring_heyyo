@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import spring.model.food.FoodDTO;
 import spring.model.restaurant.RestaurantDTO;
 import spring.model.restaurant.SearchRestaurantService;
+import spring.model.restaurantDetail.RestaurantDetailDTO;
 
 /**
- * Handle Requests for the application Main page
+ * Handle Requests for the application Main page and Search/view restaurant page
  * 
  * @author soldesk
  *
@@ -33,6 +34,15 @@ public class SearchRestaurantController {
 		return "search/restaurant_search";
 	}
 	
+	/**
+	 * Get Restaurant List From Database And Return view page
+	 * 
+	 * @author soldesk
+	 * @param bjdCode is BubJungDong Code 10 Numbers
+	 * @param categoryCode is restaurant category code
+	 * @return list view page
+	 *
+	 */
 	@GetMapping("/location/{bjdCode}/{categoryCode}")
 	public String getList(@PathVariable(name = "bjdCode") String bjdCode,
 			@PathVariable(name = "categoryCode") String categoryCode, Model model) {
@@ -42,20 +52,31 @@ public class SearchRestaurantController {
 		model.addAttribute("restaurants", list);
 		return "search/restaurant_list";
 	}
-	
+
+	/**
+	 * Get Restaurant Info And Food From Database And Return view page
+	 * 
+	 * @author soldesk
+	 * @param restaurantCode is restaurant code 
+	 * @return restaurant and foods view page
+	 *
+	 */
 	@GetMapping("/{restaurantCode}")
 	public String readOne(@PathVariable(name = "restaurantCode") String restaurantCode, Model model) {
 		
 		RestaurantDTO restaurantDTO = null;
+		RestaurantDetailDTO restaurantDetailDTO = null;
 		List<FoodDTO> foodList = null;
 		Map restaurantInfoMap = null;
 		
-		restaurantInfoMap = searchRestaurantService.readOneRestaurant(restaurantCode);
+		restaurantInfoMap = searchRestaurantService.getRestaurant(restaurantCode);
 		
 		restaurantDTO = (RestaurantDTO) restaurantInfoMap.get("restaurantDTO");
+		restaurantDetailDTO = (RestaurantDetailDTO) restaurantInfoMap.get("restaurantDetailDTO");
 		foodList = (List<FoodDTO>) restaurantInfoMap.get("foodList");
 		
 		model.addAttribute("restaurant",restaurantDTO);
+		model.addAttribute("moreInfo",restaurantDetailDTO);
 		model.addAttribute("foodList", foodList);
 		
 		return "search/restaurant_view";

@@ -23,6 +23,12 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="spring.sts.heyyo" />
+	<context:component-scan base-package="spring.model.restaurant" />
+	<context:component-scan base-package="spring.model.restaurantDetail" />
+	<context:component-scan base-package="spring.model.restaurantCategory" />
+	<context:component-scan base-package="spring.model.food" />
+	
+	
 	
 	
 	

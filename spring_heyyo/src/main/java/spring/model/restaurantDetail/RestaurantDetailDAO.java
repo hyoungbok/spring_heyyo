@@ -36,7 +36,7 @@ public class RestaurantDetailDAO implements IRestaurantDetailDAO{
 
 	@Override
 	public List list(Map map) throws Exception {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

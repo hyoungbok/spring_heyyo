@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import spring.model.food.FoodDAO;
 import spring.model.food.FoodDTO;
 import spring.model.restaurantDetail.RestaurantDetailDAO;
+import spring.model.restaurantDetail.RestaurantDetailDTO;
 
 /**
  * @author soldesk
@@ -45,17 +46,20 @@ public class SearchRestaurantService implements ISearchRestaurantService {
 	}
 	
 	@Override
-	public Map<String, Object> readOneRestaurant(String restaurantCode) {
+	public Map<String, Object> getRestaurant(String restaurantCode) {
 		
 		RestaurantDTO restaurantDTO = null;
+		RestaurantDetailDTO restaurantDetailDTO = null;
 		List<FoodDTO> foodList = null;
 		Map<String, Object> restaurantInfoMap = new HashMap<String, Object>();
 		
 		try {
 			restaurantDTO = (RestaurantDTO) restaurantDAO.read(restaurantCode);
+			restaurantDetailDTO = (RestaurantDetailDTO) restaurantDetailDAO.read(restaurantCode);
 			foodList = foodDAO.list(restaurantCode);
 			
 			restaurantInfoMap.put("restaurantDTO", restaurantDTO);
+			restaurantInfoMap.put("restaurantDetailDTO", restaurantDetailDTO);
 			restaurantInfoMap.put("foodList", foodList);
 			
 		} catch (Exception e) {

@@ -23,12 +23,27 @@ public class RegisterRestaurantController {
 	@Autowired
 	private RegisterRestaurantService registRestaurantService;
 	
+	/**
+	 * Request page for Registration restaurant
+	 * 
+	 * @return registartion page
+	 * @author soldesk
+	 *
+	 */
 	@RequestMapping(path = "/restaurant/registration", method = RequestMethod.GET)
-	public String registration(Model model) {
+	public String registration() {
 		
-		return "restaurant/registration";
+		return "restaurant/regist";
 	}
 	
+	/**
+	 * Request Registration restaurant information and result page
+	 * 
+	 * @param 
+	 * @return
+	 * @author soldesk
+	 *
+	 */
 	@RequestMapping(path = "/restaurant/registration", method = RequestMethod.POST)
 	public String registration(@RequestParam(name = "name") String rName, Model model) {
 		
@@ -36,24 +51,58 @@ public class RegisterRestaurantController {
 		RestaurantDetailDTO restaurantDetailDTO = new RestaurantDetailDTO();
 		
 		
-		return "restaurant";
+		return "restaurant/view";
 	}
 	
+	/**
+	 * Request Modifying page
+	 * 
+	 * @author soldesk
+	 *
+	 */
 	@RequestMapping(path = "/restaurant/modified", method = RequestMethod.GET)
 	public String modified(@RequestParam(name = "code") String rCode, Model model) {
 		
 		return "restaurant/modified";
 	}
 	
+	/**
+	 * Request Modifying restaurant information and result page
+	 * 
+	 * @author soldesk
+	 *
+	 */
 	@RequestMapping(path = "/restaurant/modified", method = RequestMethod.POST)
 	public String modified(@RequestParam(name = "code") String rCode, 
 			@RequestParam(name = "name") String name, Model model) {
 		
-		return "restaurant";
+		return "restaurant/view";
 	}
-	@RequestMapping(path = "/restaurant/unregistration", method = RequestMethod.GET)
-	public String unregister(@RequestParam(name = "code") String rCode, Model model) {
+	
+	/**
+	 * Request Unregister page
+	 * 
+	 * @param rCode is restaurant code
+	 * @return unregister page
+	 * @author soldesk
+	 *
+	 */
+	@RequestMapping(path = "/restaurant/unregister", method = RequestMethod.GET)
+	public String unregist(@RequestParam(name = "code") String rCode, Model model) {
 		
-		return "restaurant/unregistration";
+		return "restaurant/unregist";
+	}
+	
+	/**
+	 * Request Unregister restaurant and result page
+	 * 
+	 * @return A
+	 * @author soldesk
+	 *
+	 */
+	@RequestMapping(path = "/restaurant/unregister", method = RequestMethod.POST)
+	public String unregist(Model model) {
+		
+		return "redirect:/business/read";
 	}
 }

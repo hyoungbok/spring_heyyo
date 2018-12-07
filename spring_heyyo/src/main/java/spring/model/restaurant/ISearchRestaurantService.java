@@ -6,5 +6,5 @@ import java.util.Map;
 public interface ISearchRestaurantService {
 
 	public List<RestaurantDTO> getRestaurantList(String BubjungdongCode, String categoryCode);
-	public Map<String, Object> readOneRestaurant(String restaurantCode);
+	public Map<String, Object> getRestaurant(String restaurantCode);
 }
