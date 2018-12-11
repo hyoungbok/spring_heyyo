@@ -40,8 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="list" parameterType="Map" resultType="RestaurantDTO">
-		SELECT r_code, r_name, r_logo, r_min, r_pay, r_mintime, r_maxtime
-		FROM restaurant
+		SELECT r_code, r_name, r_logo, r_min, r_pay, r_mintime, r_maxtime, reviewCount, reviewPoint 
+		FROM restaurant INNER JOIN 
+		(SELECT r_code as reviewRCODE, COUNT(reviewnum) as reviewCount, AVG(review_point) as reviewPoint FROM review GROUP BY r_code) 
+		ON restaurant.r_code = reviewRCODE
 		WHERE r_bcode = #{r_bcode} 
 		<if test="r_categorycode != null">
 			AND r_categorycode = #{r_categorycode}

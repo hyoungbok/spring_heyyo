@@ -15,6 +15,10 @@ public class RestaurantDTO {
 	private String businessID;
 	private String r_categorycode;
 	
+	// Add for review count
+	private String reviewCount;
+	private String reviewPoint;
+	
 	public String getR_code() {
 		return r_code;
 	}
@@ -87,4 +91,19 @@ public class RestaurantDTO {
 	public void setR_categorycode(String r_categorycode) {
 		this.r_categorycode = r_categorycode;
 	}
+	
+	// Add for review count
+	public String getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(String reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+	public String getReviewPoint() {
+		return reviewPoint;
+	}
+	public void setReviewPoint(String reviewPoint) {
+		this.reviewPoint = reviewPoint;
+	}
+
 }
