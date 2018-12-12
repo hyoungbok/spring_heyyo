@@ -7,6 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Restaurant View Page</h1>
+<div class="container">
+	<h1>Restaurant View Page</h1>
+	<div id="restaurant">
+		
+	</div>
+	<div id="reivew">
+	
+	</div>
+	<div id="food">
+	
+	</div>
+</div>
 </body>
 </html>

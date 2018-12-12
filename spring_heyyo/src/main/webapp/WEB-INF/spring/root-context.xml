@@ -17,7 +17,9 @@
 	">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
 	<!-- Transaction Manager -->
+	<!-- 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
@@ -34,10 +36,23 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
     </aop:config>
 
-   <context:component-scan base-package="spring.model.*" use-default-filters="false"> 
-      <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-      <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-   </context:component-scan> 
+	<context:component-scan base-package="spring.model.*" use-default-filters="false"> 
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	 -->
+	<!-- Transaction Manager End -->
+	
+	<!-- AspectJ를 이용한  Proxy 객체 자동으로 생성 -->
+	<context:component-scan base-package="spring.sts.aop" use-default-filters="false"> 
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+	</context:component-scan>
+	<context:component-scan base-package="spring.model.*" use-default-filters="false"> 
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
  
 	<bean id="dataSource" destroy-method="close" 
 		class="org.apache.commons.dbcp.BasicDataSource" 

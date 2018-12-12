@@ -40,14 +40,14 @@ public class SearchRestaurantController {
 	 * @author soldesk
 	 * @param bjdCode is BubJungDong Code 10 Numbers
 	 * @param categoryCode is restaurant category code
-	 * @return list view page
+	 * @return restaurant list view page
 	 *
 	 */
-	@GetMapping("/location/{bjdCode}/{categoryCode}")
+	@GetMapping("/{bjdCode}/{catCode}")
 	public String getList(@PathVariable(name = "bjdCode") String bjdCode,
-			@PathVariable(name = "categoryCode") String categoryCode, Model model) {
+			@PathVariable(name = "catCode") String catCode, Model model) {
 		
-		List<RestaurantDTO> list = searchRestaurantService.getRestaurantList(bjdCode, categoryCode);
+		List<RestaurantDTO> list = searchRestaurantService.getRestaurantList(bjdCode, catCode);
 		
 		model.addAttribute("restaurants", list);
 		return "search/restaurant_list";

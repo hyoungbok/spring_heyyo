@@ -42,7 +42,8 @@
 	    <artifactId>mybatis-spring</artifactId>
 	    <version>1.2.0</version>
 	</dependency>
-	 <!-- DBCP setting -->  
+	
+	<!-- DBCP setting -->  
 	<dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-jdbc</artifactId>

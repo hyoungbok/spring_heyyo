@@ -35,4 +35,6 @@
 	<bean id="foodDAO" class="spring.model.food.FoodDAO"
 		p:mybatis-ref="sqlSession" />
 
+	<bean id="searchRestaurantService" class="spring.model.restaurant.SearchRestaurantService"
+		p:mybatis-ref="sqlSession" />
 </beans>
