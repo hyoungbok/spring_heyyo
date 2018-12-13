@@ -1,6 +1,7 @@
 package spring.model.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import spring.model.food.FoodDAO;
@@ -11,6 +12,7 @@ import spring.model.restaurantDetail.RestaurantDetailDAO;
  *
  */
 @Service
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class RegisterRestaurantService implements IRegisterRestaurantService {
 
 	@Autowired

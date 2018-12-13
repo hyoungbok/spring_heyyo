@@ -42,17 +42,6 @@
 	</context:component-scan>
 	 -->
 	<!-- Transaction Manager End -->
-	
-	<!-- AspectJ를 이용한  Proxy 객체 자동으로 생성 -->
-	<context:component-scan base-package="spring.sts.aop" use-default-filters="false"> 
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
-	</context:component-scan>
-	<context:component-scan base-package="spring.model.*" use-default-filters="false"> 
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-	</context:component-scan>
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-
  
 	<bean id="dataSource" destroy-method="close" 
 		class="org.apache.commons.dbcp.BasicDataSource" 
@@ -97,5 +86,18 @@
         <property name="order">
         	<value>1</value>
         </property>
-    </bean> 	
+    </bean>
+    
+    <context:component-scan base-package="spring.model.restaurant"/>
+	<context:component-scan base-package="spring.model.restaurantDetail"/>
+	<context:component-scan base-package="spring.model.restaurantCategory"/>
+	<context:component-scan base-package="spring.model.food"/>
+	
+    <context:component-scan base-package="spring.sts.aop">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+    <aop:config/>
+    
+	<aop:aspectj-autoproxy/>
+	
 </beans>

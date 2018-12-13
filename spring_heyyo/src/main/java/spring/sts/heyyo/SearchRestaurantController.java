@@ -3,7 +3,9 @@ package spring.sts.heyyo;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +27,11 @@ import spring.model.restaurantDetail.RestaurantDetailDTO;
 @Controller
 public class SearchRestaurantController {
 
-	@Autowired
+	@Inject
 	private SearchRestaurantService searchRestaurantService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main(Model model) {
+	public String mainPage(Model model) {
 		
 		return "search/restaurant_search";
 	}

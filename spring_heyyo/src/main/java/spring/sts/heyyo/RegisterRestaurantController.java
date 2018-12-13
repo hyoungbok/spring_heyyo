@@ -1,8 +1,11 @@
 package spring.sts.heyyo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +23,7 @@ import spring.model.restaurantDetail.RestaurantDetailDTO;
 @Controller
 public class RegisterRestaurantController {
 
-	@Autowired
+	@Inject
 	private RegisterRestaurantService registRestaurantService;
 	
 	/**
@@ -45,11 +48,13 @@ public class RegisterRestaurantController {
 	 *
 	 */
 	@RequestMapping(path = "/restaurant/registration", method = RequestMethod.POST)
-	public String registration(@RequestParam(name = "name") String rName, Model model) {
+	public String registration(@ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO, Model model) {
 		
-		RestaurantDTO restaurantDTO = new RestaurantDTO();
-		RestaurantDetailDTO restaurantDetailDTO = new RestaurantDetailDTO();
+		boolean registResult = false;
 		
+		registResult = registRestaurantService.regist(restaurantDTO);
+		
+		model.addAttribute("result", registResult);
 		
 		return "restaurant/view";
 	}
@@ -73,8 +78,13 @@ public class RegisterRestaurantController {
 	 *
 	 */
 	@RequestMapping(path = "/restaurant/modified", method = RequestMethod.POST)
-	public String modified(@RequestParam(name = "code") String rCode, 
-			@RequestParam(name = "name") String name, Model model) {
+	public String modified(@ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO, Model model) {
+		
+		boolean modifiedResult = false;
+		
+		modifiedResult = registRestaurantService.modified(restaurantDTO);
+		
+		model.addAttribute("result", modifiedResult);
 		
 		return "restaurant/view";
 	}
@@ -87,22 +97,16 @@ public class RegisterRestaurantController {
 	 * @author soldesk
 	 *
 	 */
-	@RequestMapping(path = "/restaurant/unregister", method = RequestMethod.GET)
+	@RequestMapping(path = "/restaurant/unregister", method = RequestMethod.POST)
 	public String unregist(@RequestParam(name = "code") String rCode, Model model) {
+		
+		boolean unregistResult = false;
+		
+		unregistResult = registRestaurantService.unregist(rCode);
+		
+		model.addAttribute("result", unregistResult);
 		
 		return "restaurant/unregist";
 	}
 	
-	/**
-	 * Request Unregister restaurant and result page
-	 * 
-	 * @return A
-	 * @author soldesk
-	 *
-	 */
-	@RequestMapping(path = "/restaurant/unregister", method = RequestMethod.POST)
-	public String unregist(Model model) {
-		
-		return "redirect:/business/read";
-	}
 }

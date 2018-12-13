@@ -13,13 +13,13 @@ import spring.model.food.FoodDAO;
 import spring.model.food.FoodDTO;
 import spring.model.restaurantDetail.RestaurantDetailDAO;
 import spring.model.restaurantDetail.RestaurantDetailDTO;
-import spring.sts.heyyo.HomeController;
 
 /**
  * @author soldesk
  *
  */
 @Service
+
 public class SearchRestaurantService implements ISearchRestaurantService {
 
 	@Autowired
