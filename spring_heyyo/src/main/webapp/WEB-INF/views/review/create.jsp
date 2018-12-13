@@ -60,7 +60,7 @@ function normalImg(x){
 }
 function stableImg(x){
 	var i = x.id.substr(9);
-	document.getElementById("frm").star.value=i;
+	document.getElementById("frm").review_point.value=i/2;
 	for(var j=1;j<=i;j++){
 		if(j%2!=0){
 			document.getElementById("emptystar"+j).src="${root}/review/review_stars/leftstar.jpg";
@@ -86,7 +86,8 @@ function stableImg(x){
     
     <form id="frm" action="./create" method='POST'
         enctype="multipart/form-data">
-    <input type="hidden" name="star" value="0">
+    <input type="hidden" name="review_point" value="0">
+    <input type="hidden" name="order_num" value="${order_num }">
 	<br>
 	<br>
 	<img src="${root}/review/review_stars/leftemptystar.jpg" 
@@ -121,11 +122,11 @@ function stableImg(x){
 	width="32" height="32" style="margin:-3px;" id="emptystar10">
 		<br>
 	
-	<textarea name="content" 
+	<textarea name="review_content" 
 	placeholder="리뷰를 입력해주세요"
 	rows="10" cols="100" required="required"></textarea>
 	<br><br>
-	<input type="file" name="fname" accept=".png,.jpeg,.jpg,.gif">
+	<input type="file" name="review_imageMF" accept=".png,.jpeg,.jpg,.gif">
 	<br><br>
 	<input type="submit" value="등록">
 </form>

@@ -13,8 +13,8 @@ public class ReviewTest {
 		//read(dao);
 		//update(dao);
 		//delete(dao);
-		//list(dao);
-		total(dao);
+		list(dao);
+		//total(dao);
 		
 
 	}

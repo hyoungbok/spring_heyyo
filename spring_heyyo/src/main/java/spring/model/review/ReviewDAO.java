@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import review.ReviewDTO;
+import spring.model.review.ReviewDTO;
 @Repository
 public class ReviewDAO implements IReviewDAO {
 

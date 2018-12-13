@@ -9,7 +9,7 @@ public class ReviewDTO {
 	private String review_content;
 	private String review_image;
 	private MultipartFile review_imageMF;
-	private String food_code;
+	private String f_name;
 	private String review_date;
 	private int order_num;
 	private String m_id;
@@ -39,12 +39,7 @@ public class ReviewDTO {
 	public void setReview_image(String review_image) {
 		this.review_image = review_image;
 	}
-	public String getFood_code() {
-		return food_code;
-	}
-	public void setFood_code(String food_code) {
-		this.food_code = food_code;
-	}
+
 	public String getReview_date() {
 		return review_date;
 	}
@@ -74,6 +69,12 @@ public class ReviewDTO {
 	}
 	public void setReview_imageMF(MultipartFile review_imageMF) {
 		this.review_imageMF = review_imageMF;
+	}
+	public String getF_name() {
+		return f_name;
+	}
+	public void setF_name(String f_name) {
+		this.f_name = f_name;
 	}
 	
 	

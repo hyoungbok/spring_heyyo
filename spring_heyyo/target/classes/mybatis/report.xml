@@ -3,17 +3,17 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="report"> 
-    <insert id="create" parameterType="ReportDTO">
+    <insert id="create" parameterType="spring.model.report.ReportDTO">
 		insert into report(reportnum,report_content,reviewnum,m_id)
 		values((select (nvl(max(reportnum),0)+1) from report),
 				#{report_content},#{reviewnum},#{m_id})
 	</insert>
 	
-  	<select id="read" parameterType="int" resultType="ReportDTO">
+  	<select id="read" parameterType="int" resultType="spring.model.report.ReportDTO">
   		select * from report where reportnum=#{reportnum}
   	</select>
   	
-  	<update id="update" parameterType="ReportDTO">
+  	<update id="update" parameterType="spring.model.report.ReportDTO">
 	  	update report 
 		set report_content = #{report_content}
 		where reportnum = #{reportnum}
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		delete report where reportnum = #{reportnum}
   	</delete>
   	
-  	<select id="list" parameterType="Map" resultType="ReportDTO">
+  	<select id="list" parameterType="Map" resultType="spring.model.report.ReportDTO">
   		select reportnum,report_content,reviewnum,m_id,r
 		from
 		(

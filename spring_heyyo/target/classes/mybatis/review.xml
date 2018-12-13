@@ -5,11 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="review">
     <insert id="create" parameterType="ReviewDTO">
 	    insert into review(reviewnum,review_point,review_content,
-	    review_image,food_code,review_date,
-	    order_num,m_id,r_code)
+	    review_image,review_date,order_num)
 		values((select (nvl(max(reviewnum),0)+1) from review),
 		#{review_point},#{review_content},#{review_image,jdbcType=VARCHAR},
-		#{food_code},sysdate,#{order_num},#{m_id},#{r_code})
+		sysdate,#{order_num})
 	</insert>
 	
   	<select id="read" parameterType="int" resultType="ReviewDTO">
@@ -31,23 +30,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	</delete>
   	
   	<select id="list" parameterType="Map" resultType="ReviewDTO">
-  		select 
-		reviewnum,review_point,
-		review_content,review_image,
-		food_code,review_date,order_num,m_id,r_code,r
-		from(
-		    select reviewnum,review_point,
-			review_content,review_image,
-			food_code,review_date,order_num,m_id,r_code,rownum r
-			from 
-			review
+	select 
+	reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,r
+	from(
+	    select 
+	    reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,rownum r
+	    from(
+	        select 
+	        r.reviewnum reviewnum,r.review_point review_point,r.review_content review_content,
+	        r.review_image review_image,r.review_date review_date,r.order_num order_num,o.m_id m_id,o.r_code r_code,f.f_name f_name 
+	        from
+	            review r inner join orders o 
+	            on 
+	            r.order_num = o.order_num
+	            inner join 
+	            orderdetail od
+	            on
+	            o.order_num=od.order_num
+	            inner join 
+	            food f
+	            on
+	            od.foodcode = f.food_code
+	    )
 			<where>
 				<choose>
-					<when test="col=='food_code'">
-						food_code like '%'||#{word}||'%'
+					<when test="col=='f_name'">
+						f_name like '%'||#{word}||'%'
 					</when>
 					<when test="col=='review_image'">
-						review_image like '%'||#{word}||'%'
+						review_image is not null
 					</when>
 					<when test="col=='review_point'">
 						review_point like '%'||#{word}||'%'

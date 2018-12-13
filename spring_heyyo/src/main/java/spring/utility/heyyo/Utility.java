@@ -67,7 +67,7 @@ public class Utility {
 		str.append("<input type='hidden' id='nowPage' value="+(nowPage+1)+">");
 		
 		System.out.println("col:"+col+"word:"+word+"nowPage:"+nowPage);
-		str.append("<table><tr><td><input type='button' id='bbb' onclick='bbsnext("+nowPage+")'>다음페이지</a><td></tr></table>");
+		str.append("<table><tr><td><input type='button' id='bbb' onclick='nextReview("+nowPage+")'>다음페이지</a><td></tr></table>");
 		//str.append("<div id="+(nextID+1)+"></div>");
 		}
 		

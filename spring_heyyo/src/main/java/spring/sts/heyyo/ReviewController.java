@@ -152,7 +152,7 @@ public class ReviewController {
 		   String col = Utility.checkNull(request.getParameter("col"));
 		   String word = Utility.checkNull(request.getParameter("word"));
 		   
-		   if(col.equals("total")) word= "";
+		   //if(col.equals("total")) word= "";
 		   
 		   //paging관련
 		   int nowPage = 1;
@@ -200,6 +200,12 @@ public class ReviewController {
 	
 	@RequestMapping(value="/review/create", method=RequestMethod.POST)
 	public String create(ReviewDTO reviewDTO, HttpServletRequest request) {
+		
+		System.out.println("review_point:"+reviewDTO.getReview_point());
+		System.out.println("review_contente:"+reviewDTO.getReview_content());
+		System.out.println("review_imagemf:"+reviewDTO.getReview_imageMF());
+		System.out.println("ordernum:"+reviewDTO.getOrder_num());
+		
 		//리뷰이미지 업로드 관련
 		String upDir = request.getRealPath("/review/storage");
 		int filesize = (int)reviewDTO.getReview_imageMF().getSize();
@@ -226,7 +232,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/review/create", method=RequestMethod.GET)
-	public String create() {
+	public String create(int order_num, HttpServletRequest request) {
+		
+		request.setAttribute("order_num", order_num);
 		
 		return "/review/create";
 	}

@@ -24,10 +24,44 @@ th,td{
 padding: 10px;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-	function viewNext(){
-		
-	}
+function nextReview(n){
+	$("#page").empty();
+	
+	// 사용자 ID를 갖고 온다.
+    var col = "${col}";
+    var word = "${word}";
+    var nowPage = n;
+   // var nowPage = "${nowPage}";
+ 	
+     
+    // 사용자 ID(문자열)와 체크박스 값들(배열)을 name/value 형태로 담는다.
+    var allData = { "col": col, "word": word,"nowPage":nowPage };
+     
+    $.ajax({
+        url:"next",
+        type:'GET',
+        async:false,
+        data: allData,
+        success:function(data){
+            alert("완료!");
+            var str = $("#next").html();
+            	str = str+data;
+            col = "$('#col').last().val()";
+           	word = "$('#word').last().val()";
+            nowPage = "$('#nowPage').last().val()";
+            allData = { "col": col, "word": word,"nowPage":nowPage };
+            $("#next").html(str);
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+            self.close();
+        }
+    });
+}
+	
+
 </script>
 </head>
 <body>
@@ -55,66 +89,49 @@ padding: 10px;
  	
  	</tr>
  	</table>
- 	
-	 		 <table>
-	 		 	<tr>
-	 		 		<td width="95%">${m_id } 님 ${review_date }</td>
-	 		 		<td>신고</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">${f_name}/${o_amount }(메뉴선택(콜라 500mL),사이즈 선택(中)))</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">${review_content }</td>
-	 		 	</tr>
-	 	  	</table>
+ 	<c:forEach var="dto" items="${list }">
+ 	<table>
+	 	<tr>
+	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
+	 		<td>신고</td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
+	 	
+	 	</tr>
+	 	
+		<c:if test="${not empty dto.review_image}">
+		 	<tr>
+		 		<td colspan="2">
+		 		<img src="${root }/review/storage/${dto.review_image }">
+		 		</td>
+		 	</tr>
+	 	</c:if> 
+	 	
+	 	<tr>
+	 		<td colspan="2">${dto.f_name}</td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="2">${dto.review_content }</td>
+	 	</tr>
+  	</table>
+ 	</c:forEach>
+	 		 
 	 	  
-	 		 <table>
-	 		 	<tr>
-	 		 		<td style="width:95%;">xu**님 2018년 11월 6일</td>
-	 		 		<td>신고</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">목살 두부 김치찜/1(메뉴 선택(사이다 500mL))</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">고기 진짜 많았어요...ㅎㅎㅎ</td>
-	 		 	</tr>
-	 	  	</table>
-	 	  
-	 		 <table>
-	 		 	<tr>
-	 		 		<td style="width:95%;">wo**님 2018년 11월 5일</td>
-	 		 		<td  style="width:5%;">신고</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">★★★★☆|맛★4 양★4 배달★4</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">
-	 		 		<img src="${root }/review/storage/${review_image }">
-	 		 		</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">목살 두부 김치찜/1(메뉴 선택(사이다 500mL)),튀김만두（15개）/1</td>
-	 		 	</tr>
-	 		 	<tr>
-	 		 		<td colspan="2">항상 잘먹고있습니다. 오늘도 맛있게 먹었어요. 다만 제가 비계부분을 못먹는터라, 비계가 적은 부분으로 부탁드렸는데 상당히 많은 부분이 비계부분이었어서 고기는 평소보다 적게 먹었어요 ㅠㅠ 그래도 잘먹었습니다!</td>
-	 		 	</tr>
-	 	  	</table>
-	 	  	<table>
+	 		
+	 	 <!--  	<table>
 	 	  		<tr>
 	 	  			<td style=text-align:center;>
 	 	  				<a href="javascript:viewNext()">더 보기</a>
 	 	  			</td>
 	 	  		</tr>
-	 	  	</table>
-	 
+	 	  	</table> -->
+	<div id="next">
+</div>
+ <div id="page">
+ ${paging}
+ </div>
 </body>
+
+
 </html>
