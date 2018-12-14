@@ -32,7 +32,7 @@ padding: 10px;
  	<table>
 	 	<tr>
 	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
-	 		<td>신고</td>
+	 		<td><a href="report()">신고</a></td>
 	 	</tr>
 	 	<tr>
 	 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
@@ -53,6 +53,14 @@ padding: 10px;
 	 		<td colspan="2">${dto.review_content }</td>
 	 	</tr>
   	</table>
+  	 	<div class="rcreate">
+		 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
+			  <input type="submit" name="rsubmit" value="등록">
+			  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
+		  
+			  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
+		   </form>
+	 	</div>
  	</c:forEach>
 	 		 
 	 	  

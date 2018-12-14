@@ -36,7 +36,7 @@ public class ReviewController {
 	
 		try {
 			if(r_ReplyDAO.create(r_ReplyDTO)) {
-				return "/redirect:/review/list";
+				return "redirect:/review/list";
 			}else {
 				return "/error/error";
 			}
@@ -87,9 +87,9 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/review/list")
-	public String list(HttpServletRequest request) {
+	public String list(HttpServletRequest request, HttpSession session) {
 		
-		
+		String buisnessID = (String)session.getAttribute("id");
 		//검색관련처리
 		String col = Utility.checkNull(request.getParameter("col"));
 		String word = Utility.checkNull(request.getParameter("word"));
@@ -133,7 +133,7 @@ public class ReviewController {
 			request.setAttribute("nowPage", nowPage);
 			request.setAttribute("totalRecord", totalRecord);
 			request.setAttribute("replyTotal", replyTotal);
-			
+			//request.setAttribute("buisnessID", buisnessID);
 			
 			return "/review/list";
 			

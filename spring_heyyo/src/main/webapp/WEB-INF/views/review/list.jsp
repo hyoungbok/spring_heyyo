@@ -61,7 +61,13 @@ function nextReview(n){
     });
 }
 	
-
+function report(reviewnum){
+	
+	var url = "report/create";
+	url = url + "?reviewnum="+reivewnum;
+	
+	window.open(url, "width=500, height=400")
+}
 </script>
 </head>
 <body>
@@ -93,7 +99,7 @@ function nextReview(n){
  	<table>
 	 	<tr>
 	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
-	 		<td>신고</td>
+	 		<td><a href="report(${dto.reviewnum })">신고</a></td>
 	 	</tr>
 	 	<tr>
 	 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
@@ -114,18 +120,26 @@ function nextReview(n){
 	 	<tr>
 	 		<td colspan="2">${dto.review_content }</td>
 	 	</tr>
+	 	<c:if test="${not empty dto.r_replycontent }">
+	 	<tr>
+	 	<td>사장님</td>
+	 	<td>${dto.r_replycontent}</td>
+	 	<tr>	
+	 	</c:if>
   	</table>
+	 	 <div class="rcreate">
+		 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
+			  <input type="submit" name="rsubmit" value="등록">
+			  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
+		  
+			  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
+		   </form>
+	 	</div>
  	</c:forEach>
 	 		 
 	 	  
 	 		
-	 	 <!--  	<table>
-	 	  		<tr>
-	 	  			<td style=text-align:center;>
-	 	  				<a href="javascript:viewNext()">더 보기</a>
-	 	  			</td>
-	 	  		</tr>
-	 	  	</table> -->
+	 	
 	<div id="next">
 </div>
  <div id="page">

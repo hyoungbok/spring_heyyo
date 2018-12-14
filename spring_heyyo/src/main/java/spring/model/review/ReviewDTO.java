@@ -14,6 +14,7 @@ public class ReviewDTO {
 	private int order_num;
 	private String m_id;
 	private String r_code;
+	private String r_replycontent;
 	
 	public int getReviewnum() {
 		return reviewnum;
@@ -75,6 +76,12 @@ public class ReviewDTO {
 	}
 	public void setF_name(String f_name) {
 		this.f_name = f_name;
+	}
+	public String getR_replycontent() {
+		return r_replycontent;
+	}
+	public void setR_replycontent(String r_replycontent) {
+		this.r_replycontent = r_replycontent;
 	}
 	
 	

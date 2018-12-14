@@ -31,14 +31,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	
   	<select id="list" parameterType="Map" resultType="ReviewDTO">
 	select 
-	reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,r
+	reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,r_replycontent,r
 	from(
 	    select 
-	    reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,rownum r
+	    reviewnum,review_point,review_content,review_image,review_date,order_num,m_id,r_code,f_name,r_replycontent,rownum r
 	    from(
 	        select 
 	        r.reviewnum reviewnum,r.review_point review_point,r.review_content review_content,
-	        r.review_image review_image,r.review_date review_date,r.order_num order_num,o.m_id m_id,o.r_code r_code,f.f_name f_name 
+	        r.review_image review_image,r.review_date review_date,r.order_num order_num,o.m_id m_id,
+	        o.r_code r_code,f.f_name f_name,p.r_replycontent r_replycontent 
 	        from
 	            review r inner join orders o 
 	            on 
@@ -51,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            food f
 	            on
 	            od.foodcode = f.food_code
+	            inner join
+	            review_reply p
+	            on
+	            r.reviewnum = p.reviewnum
 	    )
 			<where>
 				<choose>
