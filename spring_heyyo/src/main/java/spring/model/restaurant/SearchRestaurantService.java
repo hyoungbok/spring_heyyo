@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import spring.model.food.FoodDAO;
@@ -19,7 +20,7 @@ import spring.model.restaurantDetail.RestaurantDetailDTO;
  *
  */
 @Service
-
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class SearchRestaurantService implements ISearchRestaurantService {
 
 	@Autowired
