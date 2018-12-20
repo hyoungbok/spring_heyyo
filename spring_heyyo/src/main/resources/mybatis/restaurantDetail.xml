@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="restaurantDetail">
+
+	<insert id="create" parameterType="RestaurantDetailDTO">
+		INSERT INTO restaurant_detail(r_detailcode, r_content, r_image, r_code) VALUES(#{r_detailcode}, #{r_content}, #{r_image}, #{r_code})
+	</insert>
+	
+	<update id="update" parameterType="RestaurantDetailDTO">
+		UPDATE restaurant_detail SET r_content = #{r_content}, r_image = #{r_image} WHERE r_detailcode = #{r_detailcode}
+	</update>
+	
+	<select id="read" parameterType="String" resultType="RestaurantDetailDTO">
+		SELECT r_detailcode, r_content, r_image, r_code FROM restaurant_detail WHERE r_code = #{r_code}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM restaurant_detail WHERE r_detailcode = #{r_detailcode}
+	</delete>
+		
+	<delete id="deleteAll" parameterType="String">
+		DELETE FROM restaurant_detail WHERE r_code = #{r_code}
+	</delete>
+	
+</mapper>
+

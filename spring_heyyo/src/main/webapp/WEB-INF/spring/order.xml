@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE  tiles-definitions PUBLIC 
+    "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+
+<tiles-definitions>   
+    <definition name="main" template="/WEB-INF/views/template/template.jsp"> 
+        <put-attribute name="header" value="/WEB-INF/views/template/header.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+	<definition name="/home" extends="main"> 
+        <put-attribute name="title" value="기본페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+    </definition>   
+    <definition name="/order/create"> 
+        <put-attribute name="title" value="order 생성" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/createForm.jsp" /> 
+    </definition>    
+    <definition name="/order/delete" extends="main"> 
+        <put-attribute name="title" value="order 삭제" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/deleteForm.jsp" /> 
+    </definition>  
+    <definition name="/order/orderrec" extends="main"> 
+        <put-attribute name="title" value="order 영수증" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/orderrec.jsp" /> 
+    </definition>  
+   	 <definition name="/order/agree1" extends="main"> 
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/agree1.jsp" /> 
+    </definition> 
+     <definition name="/order/agree2" extends="main"> 
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/agree2.jsp" /> 
+    </definition>
+     <definition name="/order/agree3" extends="main">  
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/agree3.jsp" /> 
+    </definition> 
+     <definition name="/order/agree4" extends="main">  
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/agree4.jsp" /> 
+    </definition> 
+    
+     <definition name="/order/menu" extends="main">  
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/menu.jsp" /> 
+    </definition> 
+    <definition name="/order/myinfo" extends="main">  
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/myinfo.jsp" /> 
+    </definition> 
+     <definition name="/order/review" extends="main">  
+        <put-attribute name="title" value="order 약관" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/order/review.jsp" /> 
+    </definition> 
+    
+ 
+           
+   
+</tiles-definitions> 

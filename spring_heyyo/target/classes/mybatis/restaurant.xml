@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="restaurant">
+
+	<insert id="create" parameterType="RestaurantDTO">
+        INSERT INTO restaurant(r_code,r_name,r_logo,r_address,r_bcode,r_phone,r_min,r_pay,
+        <if test="r_mintime != null">
+			r_mintime,r_maxtime,
+        </if>
+		buisnessID,r_categorycode)
+		VALUES(#{r_code},#{r_name},#{r_logo},#{r_address},#{r_bcode},#{r_phone},#{r_min},#{r_pay},
+		<if test="r_mintime != null">
+			#{r_mintime},#{r_maxtime},
+		</if>
+		#{businessID},#{r_categorycode})
+	</insert>
+	
+	<update id="update" parameterType="RestaurantDTO">
+		UPDATE restaurant 
+		SET r_name = #{r_name}, r_logo = #{r_logo}, r_address = #{r_address}, r_bcode = #{r_bcode}, r_phone = #{r_phone}, r_min = #{r_min}, r_pay = #{r_pay}, r_mintime = #{r_mintime}, r_maxtime = #{r_maxtime}, r_categorycode = #{r_categorycode}
+		WHERE r_code = #{r_code}
+	</update>
+	
+	<select id="read" parameterType="String" resultType="RestaurantDTO">
+		SELECT r_code, r_name, r_logo, r_address, r_bcode , r_min, r_pay, r_mintime, r_maxtime, r_categorycode
+		FROM restaurant
+		WHERE r_code = #{r_code}
+	</select>
+	
+	<select id="readForUpdate" parameterType="String" resultType="RestaurantDTO">
+		SELECT r_code, r_name, r_logo, r_address, r_bcode, r_phone, r_min, r_pay, r_mintime, r_maxtime, r_categorycode
+		FROM restaurant
+		WHERE r_code = #{r_code}
+	</select>	
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM restaurant WHERE r_code = #{r_code}
+	</delete>
+	
+	<select id="list" parameterType="Map" resultType="RestaurantDTO">
+		SELECT r_code, r_name, r_logo, r_min, r_pay, r_mintime, r_maxtime, reviewCount, reviewPoint 
+		FROM restaurant INNER JOIN 
+		(SELECT r_code as reviewRCODE, COUNT(reviewnum) as reviewCount, AVG(review_point) as reviewPoint FROM review GROUP BY r_code) 
+		ON restaurant.r_code = reviewRCODE
+		WHERE r_bcode = #{r_bcode} 
+		<if test="r_categorycode != null">
+			AND r_categorycode = #{r_categorycode}
+		</if>
+	</select>
+	
+	<select id="listToWord" parameterType="Map" resultType="RestaurantDTO">
+		SELECT r_code, r_name, r_logo, r_min, r_pay, r_mintime, r_maxtime
+		FROM restaurant
+		WHERE r_bcode = #{r_bcode} AND r_name LIKE '%;||#{%'
+	</select>
+	
+</mapper>
+

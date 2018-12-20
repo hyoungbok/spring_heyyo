@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="food">
+
+	<insert id="create" parameterType="FoodDTO">
+		INSERT INTO food(food_code, f_price, f_name, f_image, f_menucode, f_content, r_code)
+		VALUES(#{food_code}, #{f_price}, #{f_name}, #{f_image}, #{f_menucode}, #{f_content}, #{r_code})
+	</insert>
+	
+	<update id="update" parameterType="FoodDTO">
+		UPDATE food 
+		SET f_price = #{f_price}, f_name = #{f_name}, f_image = #{f_image}, f_menucode = #{f_menucode}, f_content = #{f_content}, r_code = #{r_code}
+		WHERE food_code = #{food_code}
+	</update>
+	
+	<select id="read" parameterType="String" resultType="FoodDTO">
+		SELECT food_code, f_price, f_name, f_image, f_menucode, f_content, r_code
+		FROM food
+		WHERE food_code = #{food_code}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM food WHERE food_code = #{food_code}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="String">
+		DELETE FROM food WHERE food_code = #{food_code}
+	</delete>
+	
+	<select id="list" parameterType="String" resultType="FoodDTO">
+		SELECT food_code, f_price, f_name, f_image, f_menucode, f_content
+		FROM food
+		WHERE r_code = #{r_code}
+	</select>
+	
+</mapper>
+

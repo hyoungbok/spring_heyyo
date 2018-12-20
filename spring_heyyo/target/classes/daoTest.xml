@@ -41,7 +41,7 @@
 		  </bean>
 				 
 
-		<bean id="dao" class="spring.model.bbs.BbsDAO" 
+		<bean id="ordersdao" class="spring.model.order.OrdersDAO" 
 		p:mybatis-ref="sqlSession"	/>
 
  		

@@ -23,6 +23,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="spring.sts.heyyo" />
+<!-- 	<context:component-scan base-package="spring.model.order" /> -->
 	
 	
 	
