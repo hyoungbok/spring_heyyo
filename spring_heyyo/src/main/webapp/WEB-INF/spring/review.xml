@@ -12,6 +12,10 @@
         <put-attribute name="title" value="기본페이지" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/index.jsp" /> 
     </definition>   
+	<definition name="/menu" extends="main"> 
+        <put-attribute name="title" value="메뉴페이지" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/menu.jsp" /> 
+    </definition>   
     <definition name="/review/create" extends="main"> 
         <put-attribute name="title" value="review 생성" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/review/create.jsp" /> 
@@ -37,6 +41,17 @@
         <put-attribute name="body" value="/WEB-INF/views/review/list.jsp" /> 
     </definition>  
    
-           
+    <definition name="/report/list" extends="main"> 
+        <put-attribute name="title" value="report 목록" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/report/list.jsp" /> 
+    </definition>        
+    <definition name="/report/create" extends="main"> 
+        <put-attribute name="title" value="review 신고" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/report/create.jsp" /> 
+    </definition>        
+    <definition name="/report/delete" extends="main"> 
+        <put-attribute name="title" value="review 목록" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/review/delete.jsp" /> 
+    </definition>        
    
 </tiles-definitions> 

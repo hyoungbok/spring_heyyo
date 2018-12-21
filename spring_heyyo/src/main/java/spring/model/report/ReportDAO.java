@@ -30,7 +30,7 @@ public class ReportDAO implements IReportDAO {
 	@Override
 	public List list(Map map) throws Exception {
 		// TODO Auto-generated method stub
-		return mysql.selectList("report.list");
+		return mysql.selectList("report.list",map);
 	}
 
 	@Override

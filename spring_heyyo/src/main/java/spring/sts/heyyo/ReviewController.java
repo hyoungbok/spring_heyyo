@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import spring.model.report.ReportDAO;
 import spring.model.review.ReviewDAO;
 import spring.model.review.ReviewDTO;
 import spring.model.review_reply.ReviewReplyDAO;
@@ -26,16 +27,31 @@ public class ReviewController {
 	private ReviewDAO reviewDAO;
 	
 	@Autowired
-	private ReviewReplyDAO r_replyDAO;
-	
-	@Autowired
 	private ReviewReplyDAO r_ReplyDAO;
 	
-	@RequestMapping("/review/rcreate")
-	public String rcreate(ReviewReplyDTO r_ReplyDTO,Model model) {
+	@Autowired
+	private ReportDAO reportDAO;
 	
+	
+	
+	
+	
+	
+	@RequestMapping("/review/rcreate")
+	public String rcreate(ReviewReplyDTO r_ReplyDTO,Model model,String col,
+							String word,int nowPage,int scroll,String r_code) {
+	
+		
+		
 		try {
 			if(r_ReplyDAO.create(r_ReplyDTO)) {
+				
+				model.addAttribute("col", col);
+				model.addAttribute("word",word);
+				model.addAttribute("nowPage", nowPage);
+				model.addAttribute("scroll",scroll);
+				model.addAttribute("r_code", r_code);
+				
 				return "redirect:/review/list";
 			}else {
 				return "/error/error";
@@ -87,7 +103,7 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/review/list")
-	public String list(HttpServletRequest request, HttpSession session) {
+	public String list(HttpServletRequest request, HttpSession session,String r_code) {
 		
 		String buisnessID = (String)session.getAttribute("id");
 		//검색관련처리
@@ -115,6 +131,7 @@ public class ReviewController {
 		map.put("word", word);
 		map.put("sno", sno);
 		map.put("eno", eno);
+		map.put("r_code", r_code);
 		
 		
 		int totalRecord=0;
@@ -122,7 +139,9 @@ public class ReviewController {
 			List<ReviewDTO>list = reviewDAO.list(map);
 			
 			totalRecord = reviewDAO.total(map);
-			int replyTotal = r_replyDAO.total(map);
+			int replyTotal = r_ReplyDAO.total(map);
+			double avgstar = reviewDAO.avgstar(r_code)/2;
+			
 			
 			String paging = Utility.reviewPaging(totalRecord, nowPage, recordPerPage, col, word);
 			
@@ -133,6 +152,8 @@ public class ReviewController {
 			request.setAttribute("nowPage", nowPage);
 			request.setAttribute("totalRecord", totalRecord);
 			request.setAttribute("replyTotal", replyTotal);
+			request.setAttribute("avgstar", avgstar);
+			
 			//request.setAttribute("buisnessID", buisnessID);
 			
 			return "/review/list";
@@ -152,6 +173,8 @@ public class ReviewController {
 		   String col = Utility.checkNull(request.getParameter("col"));
 		   String word = Utility.checkNull(request.getParameter("word"));
 		   
+		   String r_code = request.getParameter("r_code");
+		   System.out.println("r_code:"+r_code);
 		   //if(col.equals("total")) word= "";
 		   
 		   //paging관련
@@ -171,12 +194,12 @@ public class ReviewController {
 		   map.put("word", word);
 		   map.put("sno", sno);
 		   map.put("eno", eno);
-		   		   
+		   map.put("r_code", r_code);		   
 		   try {
 				List<ReviewDTO>list = reviewDAO.list(map);
 				
 				int totalRecord = reviewDAO.total(map);
-				int replyTotal = r_replyDAO.total(map);
+				int replyTotal = r_ReplyDAO.total(map);
 				
 				String paging = Utility.reviewPaging(totalRecord, nowPage, recordPerPage, col, word);
 				

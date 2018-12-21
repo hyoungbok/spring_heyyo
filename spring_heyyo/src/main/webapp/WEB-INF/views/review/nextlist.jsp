@@ -32,10 +32,31 @@ padding: 10px;
  	<table>
 	 	<tr>
 	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
-	 		<td><a href="report()">신고</a></td>
+	 		<td><a href="report(${dto.reviewnum })">신고</a></td>
 	 	</tr>
 	 	<tr>
-	 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
+	 		<td colspan="2">
+	 		<c:choose>
+	 			<c:when test="${dto.review_point > '8'}">
+	 			★★★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='8' && dto.review_point >'6'}">
+	 			★★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='6' && dto.review_point >'4'}">
+	 			★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='4' && dto.review_point >'2'}">
+	 			★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='2' && dto.review_point >'0'}">
+	 			★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:otherwise>
+	 			0개
+	 			</c:otherwise>
+	 			</c:choose>
+	 		</td>
 	 	</tr>
 	 	
 	 	<c:if test="${not empty dto.review_image}">
@@ -52,15 +73,39 @@ padding: 10px;
 	 	<tr>
 	 		<td colspan="2">${dto.review_content }</td>
 	 	</tr>
+	 	<c:choose>
+	 		
+		 	<c:when test="${not empty dto.r_replycontent }">
+			 	<tr>
+			 	<td>사장님</td>
+			 	</tr>
+			 	
+			 	<tr>
+			 	<td>${dto.r_replycontent}</td>
+			 	</tr>	
+		 	</c:when>
+			 	<c:otherwise>
+			 		<tr>
+			 			<td>
+					 		<div class="rcreate">
+						 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
+							  <input type="submit" name="rsubmit" value="등록">
+							  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
+							  <input type="hidden" name="col" value="${col}">
+							  <input type="hidden" name="word" value="${word}">
+							  <input type="hidden" name="nowPage" value="${nowPage}">
+							  <input type="hidden" name="r_code" value="${param.r_code}">
+							  <input type="hidden" name="scroll" value="">
+								  	
+							  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
+						 	  </form>
+					 		</div>
+			 			</td>
+			 		</tr>
+			 	</c:otherwise>
+		 	</c:choose>
   	</table>
-  	 	<div class="rcreate">
-		 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
-			  <input type="submit" name="rsubmit" value="등록">
-			  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
-		  
-			  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
-		   </form>
-	 	</div>
+  	 	
  	</c:forEach>
 	 		 
 	 	  

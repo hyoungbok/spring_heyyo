@@ -17,6 +17,15 @@ public class ReviewDAO implements IReviewDAO {
 	public void setMybatis(SqlSessionTemplate mysql) {
 		this.mysql = mysql;
 	}
+	
+	
+	
+	public double avgstar(String r_code) throws Exception{
+		double avgstar = mysql.selectOne("review.avgstar", r_code);
+		
+		return avgstar;
+	}
+	
 	@Override
 	public boolean create(Object dto) throws Exception {
 		boolean flag = false;

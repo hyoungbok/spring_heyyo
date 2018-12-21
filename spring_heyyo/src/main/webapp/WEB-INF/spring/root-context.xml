@@ -93,11 +93,10 @@
             <list> 
                
                 <value>/WEB-INF/spring/review.xml</value> 
-       <!--          <value>/WEB-INF/spring/review_reply.xml</value> 
-                <value>/WEB-INF/spring/report.xml</value> 
-                <value>/WEB-INF/spring/ask.xml</value> 
-                <value>/WEB-INF/spring/buisness_required.xml</value> 
-                 -->
+             <!--    <value>/WEB-INF/spring/review_reply.xml</value> 
+                <value>/WEB-INF/spring/report.xml</value>  -->
+                 
+               
             </list> 
         </property> 
     </bean>  

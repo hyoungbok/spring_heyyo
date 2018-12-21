@@ -3,6 +3,16 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="review">
+	<select id="avgstar" parameterType="String" resultType="double">
+		select avg(r.review_point) review_point 
+		from 
+		review r left join orders o 
+		on r.order_num = o.order_num 
+		where o.r_code = #{r_code} 
+	
+	</select>
+
+
     <insert id="create" parameterType="ReviewDTO">
 	    insert into review(reviewnum,review_point,review_content,
 	    review_image,review_date,order_num)
@@ -52,10 +62,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            food f
 	            on
 	            od.foodcode = f.food_code
-	            inner join
+	            left outer join
 	            review_reply p
 	            on
 	            r.reviewnum = p.reviewnum
+	            where o.r_code = #{r_code}
+	            order by reviewnum desc
 	    )
 			<where>
 				<choose>
@@ -72,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 			</where>
 			
-			order by reviewnum desc
+			
 			)
 			<![CDATA[
 			

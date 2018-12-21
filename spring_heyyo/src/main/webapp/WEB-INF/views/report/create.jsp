@@ -10,7 +10,7 @@
 <div id="container">
 <h2>신고하기</h2>
 <form action="#" method="post">
-<textarea placeholder="ddd" rows="8" cols="100"  name="rcontent"></textarea>
+<textarea placeholder="ddd" rows="8" cols="100"  name="report_content"></textarea>
 <input type="submit" value="신고하기">	
 </form>
 </div>

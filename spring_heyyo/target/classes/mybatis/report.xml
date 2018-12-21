@@ -24,12 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	</delete>
   	
   	<select id="list" parameterType="Map" resultType="spring.model.report.ReportDTO">
-  		select reportnum,report_content,reviewnum,m_id,r
+  		select reportnum,report_content,reviewnum,m_id,review_content,review_image,r
 		from
 		(
-		    select reportnum,report_content,reviewnum,m_id,rownum r
-		    from report
-		    order by reportnum desc
+		    select p.reportnum reportnum,p.report_content report_content
+		    ,p.reviewnum reviewnum,p.m_id m_id,r.review_content review_content
+		    ,r.review_image review_image,rownum r
+		    from 
+		    	report p inner join review r
+		    	on
+		    	p.reviewnum = r.reviewnum
+		    order by p.reportnum desc
 		)
 			<![CDATA[
 			

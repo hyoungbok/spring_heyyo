@@ -26,18 +26,41 @@ padding: 10px;
 </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
+var height="${param.scroll}";
+
+
+
+$(document).ready(function() {
+	
+	
+	
+	if(height != ""){
+		$('html, body').animate({scrollTop : height}, 400);
+	}
+	});
+
+
+
+$(window).scroll(function () {
+	
+	height = $(document).scrollTop();
+	
+	  $("input[name=scroll]").val(height);
+	}); 
+	
 function nextReview(n){
 	$("#page").empty();
 	
-	// 사용자 ID를 갖고 온다.
+	
     var col = "${col}";
     var word = "${word}";
+    var r_code ="${param.r_code}";
     var nowPage = n;
    // var nowPage = "${nowPage}";
  	
      
     // 사용자 ID(문자열)와 체크박스 값들(배열)을 name/value 형태로 담는다.
-    var allData = { "col": col, "word": word,"nowPage":nowPage };
+    var allData = { "col": col, "word": word,"nowPage":nowPage, "r_code":r_code };
      
     $.ajax({
         url:"next",
@@ -45,13 +68,13 @@ function nextReview(n){
         async:false,
         data: allData,
         success:function(data){
-            alert("완료!");
+            
             var str = $("#next").html();
             	str = str+data;
             col = "$('#col').last().val()";
            	word = "$('#word').last().val()";
             nowPage = "$('#nowPage').last().val()";
-            allData = { "col": col, "word": word,"nowPage":nowPage };
+            allData = { "col": col, "word": word,"nowPage":nowPage,"r_code":r_code };
             $("#next").html(str);
         },
         error:function(jqXHR, textStatus, errorThrown){
@@ -63,10 +86,12 @@ function nextReview(n){
 	
 function report(reviewnum){
 	
-	var url = "report/create";
+	var url = "${root}/report/create";
 	url = url + "?reviewnum="+reivewnum;
-	
-	window.open(url, "width=500, height=400")
+	url = url + "&nowPage=${nowPage}";
+	url = url + "&r_code=${param.r_code}";
+	location.href = url;
+	//window.open(url, "width=500, height=400");
 }
 </script>
 </head>
@@ -74,15 +99,32 @@ function report(reviewnum){
 <table>
 	<tr>
 		<td style="text-align:right">
-			<span style="font-size:100px;">4.2 |</span>
+			<span style="font-size:100px;">${avgstar } </span>
 		</td>
 		<td style="text-align:left;width:50%";>
-			<ul>
-				<li>맛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★★★★☆ &nbsp;4.2</li>
-				<li>양&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★★★★☆ &nbsp;4.2</li>
-				<li>배달&nbsp;★★★★☆ &nbsp;4.1</li>
+			<span style="font-size:100px;">
+				<c:choose>
+	 			<c:when test="${avgstar > '4'}">
+	 			★★★★★
+	 			</c:when>
+	 			<c:when test="${avgstar <='4' && avgstar >'3'}">
+	 			★★★★
+	 			</c:when>
+	 			<c:when test="${avgstar <='3' && avgstar >'2'}">
+	 			★★★
+	 			</c:when>
+	 			<c:when test="${avgstar <='2' && avgstar >'1'}">
+	 			★★
+	 			</c:when>
+	 			<c:when test="${avgstar <='1' && avgstar >'0'}">
+	 			★
+	 			</c:when>
+	 			<c:otherwise>
+	 			0개
+	 			</c:otherwise>
+	 			</c:choose>
 				
-			</ul>
+			</span>
 		</td>
 	</tr>
 </table>
@@ -102,7 +144,29 @@ function report(reviewnum){
 	 		<td><a href="report(${dto.reviewnum })">신고</a></td>
 	 	</tr>
 	 	<tr>
-	 		<td colspan="2">★★★★☆|맛★5 양★5 배달★4</td>
+	 		<td colspan="2">
+	 			<c:choose>
+	 			<c:when test="${dto.review_point > '8'}">
+	 			★★★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='8' && dto.review_point >'6'}">
+	 			★★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='6' && dto.review_point >'4'}">
+	 			★★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='4' && dto.review_point >'2'}">
+	 			★★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:when test="${dto.review_point <='2' && dto.review_point >'0'}">
+	 			★${dto.review_point/2}점
+	 			</c:when>
+	 			<c:otherwise>
+	 			0개
+	 			</c:otherwise>
+	 			</c:choose>
+	 		
+	 		</td>
 	 	
 	 	</tr>
 	 	
@@ -120,21 +184,41 @@ function report(reviewnum){
 	 	<tr>
 	 		<td colspan="2">${dto.review_content }</td>
 	 	</tr>
-	 	<c:if test="${not empty dto.r_replycontent }">
-	 	<tr>
-	 	<td>사장님</td>
-	 	<td>${dto.r_replycontent}</td>
-	 	<tr>	
-	 	</c:if>
+	 		<c:choose>
+	 		
+		 	<c:when test="${not empty dto.r_replycontent }">
+			 	<tr>
+			 	<td>사장님</td>
+			 	</tr>
+			 	
+			 	<tr>
+			 	<td>${dto.r_replycontent}</td>
+			 	</tr>	
+		 	</c:when>
+			 	<c:otherwise>
+			 		<tr>
+			 			<td>
+					 		<div class="rcreate">
+						 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
+							  <input type="submit" name="rsubmit" value="등록">
+							  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
+							  <input type="hidden" name="col" value="${col}">
+							  <input type="hidden" name="word" value="${word}">
+							  <input type="hidden" name="nowPage" value="${nowPage}">
+							  <input type="hidden" name="r_code" value="${param.r_code}">
+							  <input type="hidden" name="scroll" value="">
+								  	
+							  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
+						 	  </form>
+					 		</div>
+			 			</td>
+			 		</tr>
+			 	</c:otherwise>
+		 	</c:choose>
   	</table>
-	 	 <div class="rcreate">
-		 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
-			  <input type="submit" name="rsubmit" value="등록">
-			  <input type="hidden" name="reviewnum" value="${dto.reviewnum}">
-		  
-			  <textarea rows="3" cols="28" name="r_replycontent"></textarea>
-		   </form>
-	 	</div>
+  		
+	 	 
+	 	
  	</c:forEach>
 	 		 
 	 	  
