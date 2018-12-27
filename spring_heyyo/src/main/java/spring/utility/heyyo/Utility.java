@@ -19,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Utility {
 	
 	
-/*	public static int rcount(int bbsno,ReplyDAO rdao){
-        return rdao.rcount(bbsno);
-   }
-	*/
+
 	
 	public static String reviewPaging(int totalRecord, int nowPage, int recordPerPage
 			,String col, String word) {
@@ -58,17 +55,15 @@ public class Utility {
 		//str.append("  }");
 		//str.append("</style>");
 		str.append("<DIV id='paging'>");
-		// str.append("현재 페이지: " + nowPage + " / " + totalPage + " ");
 		
-		//./list.do?col="+col+"&word="+word+"&nowPage"+(nowPage+1)
 		if(nowPage < totalPage) {
 		str.append("<input type='hidden' id='col' value="+col+">");
 		str.append("<input type='hidden' id='word' value="+word+">");
 		str.append("<input type='hidden' id='nowPage' value="+(nowPage+1)+">");
 		
-		System.out.println("col:"+col+"word:"+word+"nowPage:"+nowPage);
-		str.append("<table><tr><td><input type='button' id='bbb' onclick='nextReview("+nowPage+")'>다음페이지</a><td></tr></table>");
-		//str.append("<div id="+(nextID+1)+"></div>");
+		//System.out.println("col:"+col+"word:"+word+"nowPage:"+nowPage);
+		str.append("<table><tr><td><input type='button' id='bbb' value='다음 페이지' onclick='nextReview("+nowPage+")'></td></tr></table>");
+		
 		}
 		
 		str.append("</DIV>");

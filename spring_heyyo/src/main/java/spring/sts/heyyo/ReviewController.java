@@ -1,5 +1,6 @@
 package spring.sts.heyyo;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class ReviewController {
 	@RequestMapping("/review/list")
 	public String list(HttpServletRequest request, HttpSession session,String r_code) {
 		
-		String buisnessID = (String)session.getAttribute("id");
+		//String buisnessID = (String)session.getAttribute("id");
 		//검색관련처리
 		String col = Utility.checkNull(request.getParameter("col"));
 		String word = Utility.checkNull(request.getParameter("word"));
@@ -142,6 +143,11 @@ public class ReviewController {
 			int replyTotal = r_ReplyDAO.total(map);
 			double avgstar = reviewDAO.avgstar(r_code)/2;
 			
+			//소숫점 2자리 이하 반올림 
+			DecimalFormat df = new DecimalFormat("#.##");
+			avgstar = Double.parseDouble(df.format(avgstar));
+			
+			//String buisnessID = reviewDAO.getBuisnessID(r_code);
 			
 			String paging = Utility.reviewPaging(totalRecord, nowPage, recordPerPage, col, word);
 			
@@ -153,7 +159,6 @@ public class ReviewController {
 			request.setAttribute("totalRecord", totalRecord);
 			request.setAttribute("replyTotal", replyTotal);
 			request.setAttribute("avgstar", avgstar);
-			
 			//request.setAttribute("buisnessID", buisnessID);
 			
 			return "/review/list";
@@ -222,12 +227,21 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/review/create", method=RequestMethod.POST)
-	public String create(ReviewDTO reviewDTO, HttpServletRequest request) {
+	public String create(ReviewDTO reviewDTO,Model model, HttpServletRequest request) {
 		
 		System.out.println("review_point:"+reviewDTO.getReview_point());
 		System.out.println("review_contente:"+reviewDTO.getReview_content());
 		System.out.println("review_imagemf:"+reviewDTO.getReview_imageMF());
 		System.out.println("ordernum:"+reviewDTO.getOrder_num());
+		
+		String r_code = "";
+		try {
+			r_code = reviewDAO.getR_code(reviewDTO.getOrder_num());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		//리뷰이미지 업로드 관련
 		String upDir = request.getRealPath("/review/storage");
@@ -241,6 +255,7 @@ public class ReviewController {
 		try {
 			if(reviewDAO.create(reviewDTO)) {
 				
+				model.addAttribute("r_code", r_code);
 				return "redirect:/review/list";
 				
 				

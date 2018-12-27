@@ -18,7 +18,21 @@ public class ReviewDAO implements IReviewDAO {
 		this.mysql = mysql;
 	}
 	
+	public String getR_code(int order_num) throws Exception{
+		
+		String r_code = mysql.selectOne("review.getrcode", order_num);
+		
+		return r_code;
+	}
 	
+	
+	
+	public String getBuisnessID(String r_code) throws Exception{
+		String buisnessID = mysql.selectOne("review.getbid", r_code);
+		
+		return buisnessID;
+		
+	}
 	
 	public double avgstar(String r_code) throws Exception{
 		double avgstar = mysql.selectOne("review.avgstar", r_code);

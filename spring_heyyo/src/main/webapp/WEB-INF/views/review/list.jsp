@@ -85,14 +85,37 @@ function nextReview(n){
 }
 	
 function report(reviewnum){
-	
+	if('${sessionScope.id}'==""){
+		alert("로그인후 신고하세요");
+	}else{
 	var url = "${root}/report/create";
-	url = url + "?reviewnum="+reivewnum;
+	url = url + "?reviewnum="+reviewnum;
 	url = url + "&nowPage=${nowPage}";
 	url = url + "&r_code=${param.r_code}";
 	location.href = url;
+	}
 	//window.open(url, "width=500, height=400");
 }
+
+function onlyimg(){
+	
+	var url = "list";
+	
+	url = url + "?r_code=${param.r_code}";
+	url = url + "&col=review_image";
+	
+	location.href=url;
+}
+function totalreview(){
+	
+	var url = "list";
+	
+	url = url + "?r_code=${param.r_code}";
+	
+	
+	location.href=url;
+}
+
 </script>
 </head>
 <body>
@@ -103,26 +126,15 @@ function report(reviewnum){
 		</td>
 		<td style="text-align:left;width:50%";>
 			<span style="font-size:100px;">
-				<c:choose>
-	 			<c:when test="${avgstar > '4'}">
-	 			★★★★★
-	 			</c:when>
-	 			<c:when test="${avgstar <='4' && avgstar >'3'}">
-	 			★★★★
-	 			</c:when>
-	 			<c:when test="${avgstar <='3' && avgstar >'2'}">
-	 			★★★
-	 			</c:when>
-	 			<c:when test="${avgstar <='2' && avgstar >'1'}">
-	 			★★
-	 			</c:when>
-	 			<c:when test="${avgstar <='1' && avgstar >'0'}">
-	 			★
-	 			</c:when>
-	 			<c:otherwise>
-	 			0개
-	 			</c:otherwise>
-	 			</c:choose>
+				
+				<c:forEach var="i" begin="1" step="1" end="${avgstar/1 }">
+				<img src="${root }/review/review_stars/full_gold_star.png"
+					style="width: 100px; height: auto;">
+				</c:forEach>
+				<c:if test="${avgstar%1 >0}">
+				<img src="${root }/review/review_stars/half_gold_star.png"
+					style="width: 100px; height: auto;">
+				</c:if>
 				
 			</span>
 		</td>
@@ -134,37 +146,44 @@ function report(reviewnum){
 	 	<td>
 	 	리뷰 ${totalRecord}개 사장님 댓글 ${replyTotal}개
 	 	</td>
- 	
+ 		<td>
+		 	<c:choose>
+		 		<c:when test="${param.col == 'review_image' }">
+		 		<input type="button" value="전체리뷰" onclick="javascript:totalreview()";>
+		 		</c:when>
+		 		
+		 		<c:otherwise>
+		 		<input type="button" value="사진리뷰만" onclick="javascript:onlyimg();">
+		 		</c:otherwise>
+		 	</c:choose>
+ 		</td>
  	</tr>
  	</table>
  	<c:forEach var="dto" items="${list }">
  	<table>
 	 	<tr>
 	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
-	 		<td><a href="report(${dto.reviewnum })">신고</a></td>
+	 		<td><a href="javascript:report(${dto.reviewnum });">신고</a></td>
 	 	</tr>
 	 	<tr>
 	 		<td colspan="2">
-	 			<c:choose>
-	 			<c:when test="${dto.review_point > '8'}">
-	 			★★★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='8' && dto.review_point >'6'}">
-	 			★★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='6' && dto.review_point >'4'}">
-	 			★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='4' && dto.review_point >'2'}">
-	 			★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='2' && dto.review_point >'0'}">
-	 			★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:otherwise>
-	 			0개
-	 			</c:otherwise>
-	 			</c:choose>
+	 			<c:forEach var="i" begin="1" step="1" end="${dto.review_point/1 }">
+				<img src="${root }/review/review_stars/full_gold_star.png"
+					style="width: 30px; height: auto;">
+				</c:forEach>
+				<c:if test="${dto.review_point%1 >0}">
+				<img src="${root }/review/review_stars/half_gold_star.png"
+					style="width: 30px; height: auto;">
+				</c:if>
+				<c:choose>
+					<c:when test="${not empty dto.review_point }">
+						${dto.review_point }점
+					</c:when>
+					<c:otherwise>
+						0 점
+					</c:otherwise>
+				</c:choose>
+	 			
 	 		
 	 		</td>
 	 	
@@ -173,7 +192,8 @@ function report(reviewnum){
 		<c:if test="${not empty dto.review_image}">
 		 	<tr>
 		 		<td colspan="2">
-		 		<img src="${root }/review/storage/${dto.review_image }">
+		 		<img src="${root }/review/storage/${dto.review_image }" 
+		 			style="width:100%;height:auto;">
 		 		</td>
 		 	</tr>
 	 	</c:if> 
@@ -188,16 +208,18 @@ function report(reviewnum){
 	 		
 		 	<c:when test="${not empty dto.r_replycontent }">
 			 	<tr>
-			 	<td>사장님</td>
+			 	<td colspan="2">사장님</td>
 			 	</tr>
 			 	
 			 	<tr>
-			 	<td>${dto.r_replycontent}</td>
+			 	<td colspan="2">${dto.r_replycontent}</td>
 			 	</tr>	
 		 	</c:when>
-			 	<c:otherwise>
+<%-- 			 	<c:when test="${sessionScope.bussinessID == bussinessID}"> --%>
+			 		
+			<c:otherwise>
 			 		<tr>
-			 			<td>
+			 			<td colspan="2">
 					 		<div class="rcreate">
 						 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
 							  <input type="submit" name="rsubmit" value="등록">
@@ -213,7 +235,9 @@ function report(reviewnum){
 					 		</div>
 			 			</td>
 			 		</tr>
-			 	</c:otherwise>
+			 </c:otherwise> 		
+
+			 	
 		 	</c:choose>
   	</table>
   		

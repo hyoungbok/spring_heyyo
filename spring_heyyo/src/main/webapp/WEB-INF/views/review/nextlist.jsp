@@ -32,30 +32,26 @@ padding: 10px;
  	<table>
 	 	<tr>
 	 		<td width="95%">${dto.m_id } 님 ${dto.review_date }</td>
-	 		<td><a href="report(${dto.reviewnum })">신고</a></td>
+	 		<td><a href="javascript:report(${dto.reviewnum });">신고</a></td>
 	 	</tr>
 	 	<tr>
 	 		<td colspan="2">
-	 		<c:choose>
-	 			<c:when test="${dto.review_point > '8'}">
-	 			★★★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='8' && dto.review_point >'6'}">
-	 			★★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='6' && dto.review_point >'4'}">
-	 			★★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='4' && dto.review_point >'2'}">
-	 			★★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:when test="${dto.review_point <='2' && dto.review_point >'0'}">
-	 			★${dto.review_point/2}점
-	 			</c:when>
-	 			<c:otherwise>
-	 			0개
-	 			</c:otherwise>
-	 			</c:choose>
+	 		<c:forEach var="i" begin="1" step="1" end="${dto.review_point/1 }">
+				<img src="${root }/review/review_stars/full_gold_star.png"
+					style="width: 30px; height: auto;">
+				</c:forEach>
+				<c:if test="${dto.review_point%1 >0}">
+				<img src="${root }/review/review_stars/half_gold_star.png"
+					style="width: 30px; height: auto;">
+				</c:if>
+				<c:choose>
+					<c:when test="${not empty dto.review_point }">
+						${dto.review_point }점
+					</c:when>
+					<c:otherwise>
+						0 점
+					</c:otherwise>
+				</c:choose>
 	 		</td>
 	 	</tr>
 	 	
@@ -77,16 +73,16 @@ padding: 10px;
 	 		
 		 	<c:when test="${not empty dto.r_replycontent }">
 			 	<tr>
-			 	<td>사장님</td>
+			 	<td colspan="2">사장님</td>
 			 	</tr>
 			 	
 			 	<tr>
-			 	<td>${dto.r_replycontent}</td>
+			 	<td colspan="2">${dto.r_replycontent}</td>
 			 	</tr>	
 		 	</c:when>
 			 	<c:otherwise>
 			 		<tr>
-			 			<td>
+			 			<td colspan="2">
 					 		<div class="rcreate">
 						 	<form name="rform" action="./rcreate" method="post" onsubmit="return input(this)">
 							  <input type="submit" name="rsubmit" value="등록">
