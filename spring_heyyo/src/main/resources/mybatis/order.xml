@@ -4,10 +4,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="orders"> 
+	<insert id="ocreate">
+	insert into orderdetail(O_DETAILCODE, O_AMOUNT,ORDER_NUM, FOODCODE)
+    values((SELECT NVL(MAX(O_DETAILCODE),0)+1 from orderdetail),#{o_amount},#{order_num},#{foodcode})
+	</insert>
 	<insert id="create" parameterType="OrdersDTO">
-		insert into orders(order_num, o_pay, o_req, o_address, r_code, m_id ,
-		o_mileage)
-		values(#{order_num},#{o_pay},#{o_req},#{o_address},#{r_code},#{m_id},#{o_mileage})
+	insert into orders(order_num, o_address, o_req, o_pay,o_mileage,o_date)
+		values((SELECT NVL(MAX(order_num),0)+1 from orders),
+		#{o_address},#{o_req},#{o_pay},#{o_mileage},sysdate)
 	</insert>
 	<select id="read" parameterType="int" resultType="OrdersDTO">
 		select order_num, o_pay, o_req, o_address,r_code from orders where order_num
@@ -21,9 +25,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from member
 		where m_id = #{m_id}
 	</delete>
-	<select id="list" parameterType="String" resultType="OrdersDTO">
-		select * from Orders where m_id = #{param.m_id, jdbcType=VARCHAR}
-	</select>
 
 	<update id="update" parameterType="Map">
 		update member set m_mileage = m_mileage - #{o_mileage} +
@@ -32,8 +33,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where m_id = #{m_id}
 	</update>
 
-	<select id="read2" parameterType="String" resultType="OrdersDTO">
-		select m_id from member where m_id = #{m_id}
+	<select id="read2" parameterType="String" resultType="hashmap">
+		select m_id,food_code,f_name, f_price
+		from orders,food 
+		where food.r_code = orders.r_code and m_id = #{m_id,jdbcType=VARCHAR}
 	</select>
 	<update id="update2" parameterType="Map">
 		update member
@@ -57,11 +60,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="read3" parameterType="String" resultType="hashmap">
 	select f_name,
-      	   f_price
-       from food
-            where food_code = ${food_code}
+      	   f_price,
+      	   f_content
+       from food,
+       		restaurant
+            where food.r_code = restaurant.r_code and food_code = #{food_code} 
 	</select>
-	 
-
-
+	<select id="orderrec" parameterType="String" resultType="hashmap">
+	
+select r_name, o_address, m_phone, o_pay, f_name, o_req
+	from member, orders, restaurant, food
+	where restaurant.r_code = orders.r_code and restaurant.r_code = food.r_code and food.r_code = orders.r_code and member.m_id = #{m_id}
+	</select>   
+ 
 </mapper>

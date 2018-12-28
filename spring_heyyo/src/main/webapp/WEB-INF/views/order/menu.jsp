@@ -10,9 +10,11 @@
 <meta charset="UTF-8"> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${root}/style/style.css">
+<%-- <script type="text/javascript" src="${root}/style/protractor.js"></script>  --%>
 <script type="text/javascript" src="${root}/style/spinner.js"></script>
 <title></title> 
 <!-- 메뉴드랍  -->
@@ -175,13 +177,43 @@ margin-bottom: 60px;
 
 </style>
 </head> 
+<script>
+
+
+function myFunction() {
+    var x, text;
+
+           // Get the value of the input field with id="numb"
+           x = document.getElementById("numb").value;
+
+          // If x is Not a Number or less than one or greater than 10
+         if (isNaN(x) || x < 1 || x > 10) {
+                text = "Input not valid";
+         } else {
+                text = "Input OK";
+         }
+          document.getElementById("demo").innerHTML = text;
+      }
+      </script>
+
 <!-- *********************************************** -->
 <body>
-<!-- *********************************************** -->
+<!-- <div ng-app="" ng-init="lan={myModal3='myModal3',number:'number'}"> -->
+<!-- <p>숫자계산: <span ng-bind="myModal3+number"></span></p> -->
+<!-- </div> -->
 
+<h1>JavaScript Can Validate Input</h1>
 
+<p>Please input a number between 1 and 10:</p>
+
+<input id="numb" type="number">
+
+<button type="button" onclick="myFunction()">Submit</button>
+
+<p id="demo"></p>
 
 <!-- 메뉴바 -->
+
  	<div  style="margin-left:25%; margin-top:5%;">
 		<table style="border: 1px solid; ">
 			<tr >
@@ -198,105 +230,114 @@ margin-bottom: 60px;
 		</table>
 		</div>
 <!-- 메뉴 드랍 -->
-<script type="text/javascript">
 
-
-</script>
 		<div class="table1" style="color: #666666; margin-left:25%; padding-right: 30px; float: left;">
 		 	<button class="accordion">인기메뉴 1</button>
 			<div class="panel" style="text-align: left; ">
 			<div id="myBtn">
-			<table class="read" id="abc">
+			<table class="read" id="abcd">
 				<c:choose>
 					<c:when test="${empty read3}"><br><br><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;음식내역이 없습니다.
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="read3" items="${read3}">
-							<c:set var="total" value="0"/>
-							<c:forEach var="result"  items="${read3}" varStatus="status">
+						
+							
 								<tr>
 									<th>음식이름</th>
-									<th>음식정보</th>
+									<th>음식정보</th> 
 									<th>가격</th>
-									<th>수량</th>
+									
 								</tr>
        
 								<tr>
-									<td>${result.F_NAME}</td>
-									<td>${result.F_CONTENT}</td>
-									<td>${result.F_PRICE}</td>
-									<td>${result.O_AMOUNT}</td>
+									<td id="abc">${read3.F_NAME}</td>
+									<td>${read3.F_CONTENT}</td> 
+									<td id="price">${read3.F_PRICE}</td>
+									
 								</tr>
 							 
-								<tr>
-								<td colspan="2">합계</td>
-								
-					<c:set var="total" value="${total+ result.F_PRICE}"/>
-					
-					<td colspan="2"><c:out value="${total }"/>
-					
-					</td>
-						
-								
+										
 							</c:forEach>
 
 							
-						</c:forEach>
-					</c:otherwise>
+								</c:otherwise>
 				</c:choose>
 				 
 			</table>
-<!-- 			<p id="abc">기본 세트 1 (후라이드 + 양념) -->
-<%-- 				<img alt="" src="<%=root %>/img/chicken.png" style=" width: 50px; height: 30px;"> --%>
-			
-<!-- 			<br>금액 : ￦50,000 -->
-<!-- 			<br><br> -->
-	
-<!-- 		</p> -->
-	
-<!-- 		<form name="frm1" method="POST"> -->
-<%-- 			<p id="che1" onchange="food()" >111${o_pay} ##반복해야됩니다.####기본 세트 2 (간장 + 양념) --%>
-<%-- 				<img alt="" src="<%=root %>/img/chicken.png" style=" width: 50px; height: 30px;"> --%>
-<!-- 			</p> -->
-<!-- 		</form> -->
-<!-- 		<form name="frm2" method="POST"> -->
-<!-- 			<p>  ##반복해야됩니다.####기본 세트 3 (후라이드 + 땡초) -->
-<%-- 				<img alt="" src="<%=root %>/img/chicken.png" style=" width: 50px; height: 30px;"> --%>
-<!-- 			</p> -->
-<!-- 		</form> -->
-<!-- 		<form name="frm3" method="POST"> -->
-<!-- 			<p>  ##반복해야됩니다.####기본 세트 4 (간장 + 땡초) -->
-<%-- 				<img alt="" src="<%=root %>/img/chicken.png" style=" width: 50px; height: 30px;"> --%>
-<!-- 			</p> -->
-<!-- 		</form> -->
 			</div>
 			</div>
 		 </div>
 
-	<div >
+
+<script type="text/javascript">
+// function payment(){
+// 	var url="/order/create";
+// 	url=  url+"?m_id=${dto.m_id}";
+	
+// 	location.href=url;
+// }
+
+
+// $(function() {
+// 			$("form").on("submit", function(event) {	// <form>요소에 "submit" 이벤트가 발생할 때,
+// 				event.preventDefault();					// 서버로 전송하지 않음.
+// 				$("#text").html($(this).serialize());	// 입력받은 데이터를 직렬화하여 나타냄.
+// 			});
+// 		});
+		
+
+
+</script>
 <!-- 	//옆에 있는 주문표출력 -->
+<div class="container" id="datapass">
+<FORM name="frm1" oninput="m.value=parseInt(myModal5.value)" action="create">
+	
+
+	<input type="hidden" name="food_code" value="${food_code}">
+
+	
 	 <table style="border: 1px solid; width: 20%;">
 		 <tr style="background-color: #2a2a2a; color: #ffffff ">
-			 <td style="border-bottom: 1px solid; height: 40px; padding: 0 0 0 20px;">
+			 <th style="border-bottom: 1px solid; height: 40px; padding: 0 0 0 20px;">
 				 주문표
-			 </td>
+			 </th>
+		 </tr> 
+		 <tr>
+		 	<th>음식이름</th>
+		 	<td><output id="myModal4" name="myModal4"></output>
+		 	</td>
+		 	
+		 </tr>
+		 <tr>  
+		 	<th>가격</th>
+		 	<td><output id="myModal5" name="myModal5"></output></td>
 		 </tr>
 		 <tr>
-			 <td style="height: 100px; padding: 0 0 0 20px;">
-				<p> 주문표에 담긴 메뉴가 없습니다</p>
-				
-			 </td>
+			
+			
+			<td>
+			<output id="myModaltotal" for="myModal5" name="myModaltotal" ></output>
+			합계</td>
+		 	
 		 </tr>
+
 	 </table>
 
-		<button  type="button" onclick="location.href='#'" 
+		<button  type="submit"
 		style="background-color:red; border: 1px solid #ffffff; color: #ffffff;
 		font-size: 18px; height:60px; width:20%;  margin-top: 10px;"
 		>주문하기
 	 	</button>
+	 			<script type="text/javascript">
+document.getElementById('f_name').value =  $("#myModal4").text();
+</script>
+	 	
+	 	</FORM>
+	 	</div>
 	
-</div>
+
 <!-- 여기까지 메뉴onchange실행시켜서  f_code를 영수증에 보내는과정 -->
 <script>
 var acc = document.getElementsByClassName("accordion");
@@ -319,29 +360,35 @@ for (i = 0; i < acc.length; i++) {
 function food(){
 	alert(document.getElementsByName("che1").item(0).innerHTML);
 }
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+});
 </script>
 
 
- 
+
  <!-- 숨기기 (영수증 온,오프창 onchange에 받아온 값을 표현하기 위한 테이블)-->
 <!-- The Modal -->
+<FORM name="frm" oninput="x.value=parseInt(myModal2.value)*parseInt(number.value)" action="/order/menu">
 <div id="myModal" class="modal" >
   <!-- Modal content -->
   <div class="modal-content">
-     		
-      <span class="close">&times;</span>
+       <span class="close">&times;</span>
    <div class="modal-body"style="text-align: center; font-size: 20px; 
     	padding: 30px; margin-bottom:10px; border-bottom: 1px solid;" >
 	
-      		<strong >${f_name}</strong>	
- 			<span id="myModal1"></span>
+      		
+ 		<div id="myModal1"></div>
     </div>
+    
     <div class="modal-body"style=" font-size: 18px; 
     	padding: 15px;  border-bottom: 1px solid; " >
       		<strong >가격</strong>	
+     		
 		<div style=" float: right;">
       
-      		<span id="myModal2">${f_price}</span>
+      		<input id="myModal2" readonly="readonly"></input>
 		</div>
     </div>
     <div style="padding: 15px; border-bottom: 1px solid;">
@@ -365,48 +412,88 @@ function food(){
 					</div>
     		</div>
     	  </div>
-     </div>
+     
+	
 	 	   
 	    <div class="modal-body" style="padding: 15px; border-bottom: 1px solid;">
-	    	<div>
+	    	<div class="container">
+	    		<div>
 	    		<strong style="font-size: 20px;">수량</strong>
-	   			<div class="wan-spinner wan-spinner-2" style=" float: right; padding: 10px;" >
-				<a href="javascript:void(0)" class="minus">-</a> 
-		      	<input type="text" value="1" readonly /> 
-				<a href="javascript:void(0)" class="plus">+</a>	
+	    		</div>
+	 
+	    		<input id="number" type="number" name="number" value='0' />
+	   			
 				</div>
-	    	</div>  
-	    </div>
+			</div>		
+	 
+	    		
 	    
-	    <div class="modal-body" style="padding: 15px;">
+	    <div class="modal-body" style="padding: 15px; border-bottom: 1px solid;">
 	    	<div>
 <!-- 	    	총금액출력 구현하기 -->
 	    		<strong style=" font-size: 20px; ">총금액</strong>
+
 	   			<div style=" float: right;">
-			         <span >${o_pay}</span>
-		      		
+			         <output id="myModalprice" for="myModal2 number" name="x"></output>
 				</div>
 	    	</div>
 	    </div>
-
-	    
-	   <div   style="text-align: center; font-size: 20px; 
+	   </div>
+	   
+	 	
+	   					 	    
+	  <div  style="text-align: center; font-size: 20px; 
 	    	padding: 30px;border-bottom: 1px solid;background-color:#c8c8c8 " >
-				<a href=""><span>주문 취소	</span></a>
+				<input type="button" onclick="history.back()" value="주문취소">
+<!-- 				<a href=""><span>주문 취소	</span></a> -->
 	    </div>
-    
+     
 	   <div class="modal-body"style="text-align: center; font-size: 20px; 
 	    	padding: 30px; margin-bottom:10px; border-bottom: 1px solid; background-color:red; " >
 	
-	      		<strong  ><a href="" style="color:#ffffff">주문 등록</a></strong>	
+	      		<strong><input  id="datapass1" type="button" value="주문등록"></strong>
+<!-- 	      		<a href="" style="color:#ffffff">주문 등록</a>	 -->
 	    </div>
-
-  </div>
-
+	  
+	    </div>
+	  
 </div>
-<!-- 종료 -->
+
+ </form>
+
 
 <script>
+
+
+
+
+
+//Get the button that opens the modal
+var atn = document.getElementById("datapass1");
+var qwe = document.getElementById("myModal4");
+
+
+
+atn.onclick = function() {
+
+	
+    modal.style.display = "block";
+	document.getElementById("myModal4").innerHTML = document.getElementById("myModal1").innerHTML;
+	document.getElementById("myModal5").innerHTML = document.getElementById("myModalprice").value;
+//	document.getElementById("f_name").innerHTML = document.getElementById("myModal1").innerHTML;
+/* 	document.frm1.f_name.value = $("#myModal4").text();
+	document.frm1.f_name.value = $("#myModal5").text();
+	document.frm1.f_name.value = $("#myModal1").text(); */
+	
+/* 	alert(${document.getElementById('myModal4').value}	);
+	var enc = document.getElementById("myModal4").value;
+	 
+	$('input[name=f_name]').attr('value',enc); */
+	
+	
+
+}
+
 //예외체크
 $.ajaxSetup({
     error: function(jqXHR, exception) {
@@ -450,63 +537,44 @@ function datapass(){
 		var f = document.frm;
 		var f_name = f.f_name.value;
 		var f_price = f.f_price.value;
+		var x = f.x.value;
 		
 		
-		var url = "menu"; //받아올 데이터 폼으로 경로설정한곳에서 받아온다. 
+		var url = "/order/menu"; //받아올 데이터 폼으로 경로설정한곳에서 받아온다. 
 
 		$.ajax({
 			url : url,
 			type: "GET",	
 			dataType : 'text', //데이터타입을 text로 받아옴
+			data : {"myModal1":myModal1,"f_price":f_price,"x":x},
 			success : function(data){
-				$("#myModal1").text(data.trim()).css("color","red");
+				$("#myModal4").text(data.trim()).css("color","red");
 			}
 		});
 	}
+	
 
 
-// 카운트구현
-$(document).ready(function() {  
-	var options = {
-		maxValue: 10,
-		minValue: -5,
-		step: 0.131,
-		inputWidth: 100,
-		start: -2,
-		plusClick: function(val) {
-			console.log(val);
-		},
-		minusClick: function(val) {
-			console.log(val);
-		},
-		exceptionFun: function(val) {
-			console.log("excep: " + val);
-		},
-		valueChanged: function(val) {
-			console.log('change: ' + val);
-		}
-	}
-	
-	
-	$(".wan-spinner-2").WanSpinner().css("border-color", "#2C3E50");
-});
 
 // Get the modal
 var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
-var abc = document.getElementById("abc");
+ 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
 btn.onclick = function() {
 
 	
     modal.style.display = "block";
-    document.getElementById("myModal1").innerHTML = document.getElementById("abc")
-    document.getElementById("myModal2").innerHTML = document.getElementById("abc")
+	document.getElementById("myModal1").innerHTML = document.getElementById("abc").innerHTML;
+	document.getElementById("myModal2").value = document.getElementById("price").innerHTML;
+	document.getElementById("mymodal3").value = document.getElementById("Ordercart").innerHTML;
+	
+	
+
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -518,9 +586,10 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+
     }
 }
-</script>
+</script> 
 
  
 

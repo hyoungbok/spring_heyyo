@@ -1,5 +1,6 @@
 package spring.sts.heyyo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +31,32 @@ public class OrdersController {
 	@Autowired
 	private OrdersService mgr;
 	
-	@RequestMapping(value="/order/orderrec",method=RequestMethod.GET)
-	public String orderrec() {
+//	@RequestMapping(value="/order/menu", method=RequestMethod.GET)
+//	public String getOrder(Model model) {
+//		if(!model.containsAttribute("getOrder")) {
+//			model.addAttribute("getOrder", new ArrayList<Orders>());
+//				
+//			}
+//		return "order/createForm";
+//		}
+	
+	
+	@RequestMapping(value="/order/orderrec")
+	public String orderrec(HttpSession session,HttpServletRequest request,Model model,
+		String r_name,String o_address,String f_name,String o_req	) throws Exception {
+		
+		String m_id = "admin7";
+		System.out.println(m_id);
+		
+		
+		List orderrec = ordersdao.orderrec(m_id); 
+		System.out.println(orderrec);
+		
+		
+		model.addAttribute("orderrec", orderrec);
+		
+		
+		
 		
 		return "/order/orderrec";
 	}
@@ -48,18 +74,30 @@ public class OrdersController {
 		
 		return "/order/myinfo";
 	}
+//	@RequestMapping(value="/order/menu",method=RequestMethod.POST)
+//	public String menu() {
+//		
+//		
+//		return "redirect:/order/create";
+//	}
+	
+	
 	//앞에 타입은 지워라
-	@RequestMapping(value="/order/menu",method=RequestMethod.GET)
+	@RequestMapping("/order/menu")
 	public String menu(HttpSession session,Model model,HttpServletRequest request) throws Exception {
 		String food_code = "1";
-//		String food_code = (String)request.getAttribute("food_code");
+		String m_id = "admin7";
+		System.out.println(m_id);
 		System.out.println(food_code);
-		List<HashMap> read3 = ordersdao.read3(food_code);
+		List read3 = ordersdao.read3(food_code);
 		System.out.println(read3);
 		model.addAttribute("read3", read3);
+		model.addAttribute("food_code",food_code);
+		System.out.println(food_code);
 		
+		 
 		return "/order/menu";
-	}
+	} 
 	
 	@RequestMapping(value="/order/agree4",method=RequestMethod.GET)
 	public String agree4() {
@@ -90,49 +128,13 @@ public class OrdersController {
 		return "/order/sum";
 	}
 	
-	@RequestMapping("/order/list")
-	public String list(HttpServletRequest request, Model model,String m_id) throws Exception {
-		String col = Utility.checkNull(request.getParameter("col"));
-		String word = Utility.checkNull(request.getParameter("word"));
-		
-		if(col.equals("total")) word="";
-		
-		int nowPage = 1;
-		int recordPerPage = 5;
-		
-		if(request.getParameter("nowPage")!=null) {
-			nowPage = Integer.parseInt(request.getParameter("nowPage"));
-		}
-		
-		int sno = ((nowPage-1)*recordPerPage) +1;
-		int eno = nowPage * recordPerPage;
-		
-		Map map = new HashMap();
-		map.put("col", col);
-		map.put("word", word);
-		map.put("sno", sno);
-		map.put("eno", eno);
-		
-		List<OrdersDTO> list = ordersdao.list(m_id);
-		
-		String paging = Utility.paging3(nowPage, recordPerPage, eno, col, word);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("nowPage", nowPage);
-		model.addAttribute("col", col);
-		model.addAttribute("word", word);
-		
-		
-		return "/order/list";
-	}
-	
 	@RequestMapping(value="/order/delete", method=RequestMethod.POST)
 	public String delete(int order_num,String m_id) throws Exception{
 		 
 		
 		try {
 			mgr.update2(order_num, m_id);
-		
+			System.out.println(mgr);
 			return "redirect:/list";
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -152,27 +154,38 @@ public class OrdersController {
 	}
 	
 	@RequestMapping(value="/order/create",method=RequestMethod.POST)
-	public String create(OrdersDTO dto, Model model) throws Exception {
+	public String create(OrdersDTO dto, Model model,HttpServletRequest request) throws Exception {
 		
-		try {
-			mgr.update(dto);
-			
-			model.addAttribute("dto", dto);
-			
+		boolean flag = ordersdao.create(dto);
+		System.out.println(flag);
+		if(flag) {
+			Map map = new HashMap();
+			map.put("m_id", dto.getM_id());
+			map.put("o_mileage", dto.getO_mileage());
+			ordersdao.update(map);
+			System.out.println(flag);
+			System.out.println(map);
+		
 			return "/order/orderrec";
-		
-		}catch(Exception e) {
-			e.printStackTrace();
-			
-			return "/error/error";
 		}
-		 
-	} 
+		return "error/error";
+	}
 	
 	@RequestMapping(value="/order/create",method=RequestMethod.GET)
-	public String create() {
+	public String create(HttpSession session, HttpServletRequest request,Model model) throws Exception {
+	
+		String food_code = (String)request.getParameter("food_code");
+		String f_name = (String)request.getParameter("f_name");
+//		int myModaltotal = Integer.parseInt(request.getParameter("myModaltotal"));
 		
-		return "order/createForm";
+		String m_id = (String)session.getAttribute("m_id");
+		
+		model.addAttribute("food_code",food_code);
+		model.addAttribute("f_name",f_name);
+//		model.addAttribute("myModaltotal", myModaltotal);
+		model.addAttribute("m_id",m_id);
+		
+		return "/order/create";
 		
 	}
 	

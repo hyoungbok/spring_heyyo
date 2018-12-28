@@ -9,29 +9,29 @@ public class OrderTest {
 
 	public static void main(String[] args) throws Exception {
 		OrdersDAO dao = new OrdersDAO();
-//		 create(dao);
+		 create(dao);
 //		 update(dao, null);
 //		read(dao);
 		// delete(dao);
 		// list(dao);
 //		read2(dao);
-		sum(dao);
+//		sum(dao);
 //		 read3(dao);
 	}
 
-	private static void read3(OrdersDAO dao) throws Exception {
-		
-		List<OrdersDTO> list = dao.read3("1");
-		
-		Iterator<OrdersDTO> iter = read3.iterator();
-
-		while (iter.hasNext()) {
-			OrdersDTO dto = iter.next();
-			p(dto);
-			p("----------------------");
-		}
-
-	}
+//	private static void read3(OrdersDAO dao) throws Exception {
+//		
+//		List list = dao.read3("1");
+//		
+//		Iterator<OrdersDTO> iter = dao.read3("3");
+//
+//		while (iter.hasNext()) {
+//			OrdersDTO dto = iter.next();
+//			p(dto);
+//			p("----------------------");
+//		}
+//
+//	}
 		
 
 	private static void sum(OrdersDAO dao) throws Exception {
@@ -48,19 +48,19 @@ public class OrderTest {
 
 	}
 
-	private static void list(OrdersDAO dao) throws Exception {
-
-		List<OrdersDTO> list = dao.list("admin2");
-
-		Iterator<OrdersDTO> iter = list.iterator();
-
-		while (iter.hasNext()) {
-			OrdersDTO dto = iter.next();
-			p(dto);
-			p("----------------------");
-		}
-
-	}
+//	private static void list(OrdersDAO dao) throws Exception {
+//
+//////		List<OrdersDTO> list = dao.list("admin2");
+////
+////		Iterator<OrdersDTO> iter = list.iterator();
+////
+////		while (iter.hasNext()) {
+////			OrdersDTO dto = iter.next();
+////			p(dto);
+////			p("----------------------");
+////		}
+////
+////	}
 
 	private static void delete(OrdersDAO dao) throws Exception {
 
@@ -92,18 +92,18 @@ public class OrderTest {
 		}
 	}
 
-	private static void create(OrdersDAO dao) throws Exception {
+	private static void create(OrdersDAO dao) throws Exception  {
 		OrdersDTO dto = new OrdersDTO();
-		dto.setOrder_num(20);
-		dto.setO_pay(16400);
+		
+		dto.setOrder_num(10);
+		dto.setO_pay(36400);
 		dto.setO_req("짜장추가요");
 		dto.setO_address("경기도");
-		dto.setR_code("R001");
-		dto.setM_id("admin2");
 		dto.setO_mileage(1000);
 
 		if (dao.create(dto)) {
 			p("성공");
+			System.out.println(dto);
 		} else {
 			p("실패");
 		}
@@ -122,13 +122,7 @@ public class OrderTest {
 		p("식당코드:" + dto.getR_code());
 		p("회원아이디:" + dto.getM_id());
 		p("마일리지:" + dto.getO_mileage());
-		p("저장마일리지:" + dto.getM_mileage());
-		p("등급:" + dto.getM_grade());
-		p("음식이름:" + dto.getF_name());
-		p("음식가격:" + dto.getF_price());
-		p("수량:" + dto.getO_amount());
-		p("음식코드:" + dto.getFood_code());
-		p("음식코드:" + dto.getFoodcode());
+
 
 	}
 

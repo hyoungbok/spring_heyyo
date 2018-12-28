@@ -16,24 +16,26 @@ public class OrdersService {
 	
 	public void update(OrdersDTO dto) throws Exception{
 		
-		 
-		ordersdao.create(dto);
-		
-		Map map = new HashMap();
-		map.put("m_id", dto.getM_id());
-		map.put("o_mileage", dto.getO_mileage());
-		ordersdao.update(map);
+		boolean flag = ordersdao.create(dto);
+		if(flag) {
+			Map map = new HashMap();
+			map.put("m_id", dto.getM_id());
+			map.put("o_mileage", dto.getO_mileage());
+			ordersdao.update(map);
+		}
 	}
 	
 	public void update2(int order_num,String m_id) throws Exception{
 		
-		Map map = new HashMap();
-		map.put("m_id", m_id);
-		map.put("order_num", order_num);
 		
-		ordersdao.delete(order_num);
-		 
-		ordersdao.update2(map);
+		boolean pflag = ordersdao.delete(order_num);
+		if(pflag) {
+			Map map = new HashMap();
+			map.put("m_id", m_id);
+			map.put("order_num", order_num);
+			ordersdao.update2(map);
+				
+		}
 	}
 	 
 }
